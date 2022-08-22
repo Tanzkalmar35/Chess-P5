@@ -2,8 +2,6 @@
 
 # Creators: Fabian Holler, Jarno Callies, Marc Müller
  
-# To Preview: 
-
 # To clone the project:
 
     1. Via terminal
