@@ -1,3 +1,8 @@
+:root{
+  --primary-color: white;
+  --secondary-color: black;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
@@ -5,10 +10,27 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(22, 20, 20);
+    background:var(--primary-color)
 
     
 }
+
+
+/*dark_mode*/
+.dark_mode{
+  --primary-color: black;
+  --secondary-color: white;
+}
+button{
+  margin-top: 200px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  padding: 10px;
+  background-color: #1E2B32;
+  border-color: white;
+  color: white;
+}
+/*dark_mode END*/
 
 /*Navigation Bar*/
 @import url('https://fonts.googleapis.com/css?family=Roboto');
