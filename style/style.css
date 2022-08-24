@@ -9,6 +9,8 @@ body {
 
     
 }
+
+/*Navigation Bar*/
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .container{
@@ -86,7 +88,7 @@ li:hover{
   display: block;
   cursor: pointer;
 }
-
+/*Navigation Bar END*/
 
 .chessboard {
     width: 640px;
