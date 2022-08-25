@@ -5,95 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style.css"/>
-    <script src="game.js"></script>
+    <link rel="stylesheet" href="style/board.css"/>
     <title>Chess.com 2</title>
 </head>
 <body>
 
     <!-- For chess pieces: https://www.i2symbol.com/symbols/chess -->
 
-    <div class="chessboard" id="chessboard">
-
-        <!-- A1 - A8 -->
-        <div class="black" id="A1">♖</div>
-        <div class="white" id="A2">♘</div>
-        <div class="black" id="A3">♗</div>
-        <div class="white" id="A4">♕</div>
-        <div class="black" id="A5">♔</div>
-        <div class="white" id="A6">♗</div>
-        <div class="black" id="A7">♘</div>
-        <div class="white" id="A8">♖</div>
-
-        <!-- B1 - B8 -->
-        <div class="white" id="B1">♙</div>
-        <div class="black" id="B2">♙</div>
-        <div class="white" id="B3">♙</div>
-        <div class="black" id="B4">♙</div>
-        <div class="white" id="B5">♙</div>
-        <div class="black" id="B6">♙</div>
-        <div class="white" id="B7">♙</div>
-        <div class="black" id="B8">♙</div>
-
-        <!-- C1 - C8 -->
-        <div class="black" id="C1"></div>
-        <div class="white" id="C2"></div>
-        <div class="black" id="C3"></div>
-        <div class="white" id="C4"></div>
-        <div class="black" id="C5"></div>
-        <div class="white" id="C6"></div>
-        <div class="black" id="C7"></div>
-        <div class="white" id="C8"></div>
-
-        <!-- D1 - D8 -->
-        <div class="white" id="D1"></div>
-        <div class="black" id="D2"></div>
-        <div class="white" id="D3"></div>
-        <div class="black" id="D4"></div>
-        <div class="white" id="D5"></div>
-        <div class="black" id="D6"></div>
-        <div class="white" id="D7"></div>
-        <div class="black" id="D8"></div>
-
-        <!-- E1 - E8 -->
-        <div class="black" id="E1"></div>
-        <div class="white" id="E2"></div>
-        <div class="black" id="E3"></div>
-        <div class="white" id="E4"></div>
-        <div class="black" id="E5"></div>
-        <div class="white" id="E6"></div>
-        <div class="black" id="E7"></div>
-        <div class="white" id="E8"></div>
-
-        <!-- AF - F8 -->
-        <div class="white" id="F1"></div>
-        <div class="black" id="F2"></div>
-        <div class="white" id="F3"></div>
-        <div class="black" id="F4"></div>
-        <div class="white" id="F5"></div>
-        <div class="black" id="F6"></div>
-        <div class="white" id="F7"></div>
-        <div class="black" id="F8"></div>
-
-        <!-- AG - G8 -->
-        <div class="black" id="G1">♟</div>
-        <div class="white" id="G2">♟</div>
-        <div class="black" id="G3">♟</div>
-        <div class="white" id="G4">♟</div>
-        <div class="black" id="G5">♟</div>
-        <div class="white" id="G6">♟</div>
-        <div class="black" id="G7">♟</div>
-        <div class="white" id="G8">♟</div>
-
-        <!-- H1 - H8 -->
-        <div class="white" id="H1">♜</div>
-        <div class="black" id="H2">♞</div>
-        <div class="white" id="H3">♝</div>
-        <div class="black" id="H4">♛</div>
-        <div class="white" id="H5">♚</div>
-        <div class="black" id="H6">♝</div>
-        <div class="white" id="H7">♞</div>
-        <div class="black" id="H8">♜</div>
-
-    </div>
+    <div id="board"></div>    
+    <script type="module" src="game.js"></script>
 </body>
 </html>
