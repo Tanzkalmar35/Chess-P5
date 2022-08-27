@@ -92,6 +92,8 @@ let turn = false;
 let winScreen = false;
 let frameHandle;
 
+/*************************************************************** On click handling ************************************************/
+
 //eventlistener for click on piece
 addEventListener("mousedown", e => {
   if (winScreen) {
@@ -171,7 +173,7 @@ frameHandle = requestAnimationFrame(frame);
 function getPieceAt(x, y) {
   return pieces.find(p => p.x === x && p.y === y);
 }
-// calculating valid moves and highliting them on board
+/************************************************************************************************ move validation *******************************/
 function getSquares(piece) {
   let validMoves = [];
   switch (piece.type) {
@@ -179,16 +181,16 @@ function getSquares(piece) {
       const n = piece.color === "White" ? 1 : -1;
       const r = piece.color === "White" ? 6 : 1;
       if (getPieceAt(piece.x, piece.y - 1 * n) === undefined) {
-        validMoves.push([piece.x, piece.y - 1 * n, "#0000ff55"]);
+        validMoves.push([piece.x, piece.y - 1 * n, "#ba55d3"]);
         if (getPieceAt(piece.x, piece.y - 2 * n) === undefined && piece.y === r)
-          validMoves.push([piece.x, piece.y - 2 * n, "#0000ff55"]);
+          validMoves.push([piece.x, piece.y - 2 * n, "#800080"]);
       }
       const left = getPieceAt(piece.x - 1, piece.y - 1 * n);
       const right = getPieceAt(piece.x + 1, piece.y - 1 * n);
       if (left !== undefined && left.color !== piece.color)
-        validMoves.push([piece.x - 1, piece.y - 1 * n, "#ff000055"]);
+        validMoves.push([piece.x - 1, piece.y - 1 * n, "#ba55d3"]);
       if (right !== undefined && right.color !== piece.color)
-        validMoves.push([piece.x + 1, piece.y - 1 * n, "#ff000055"]);
+        validMoves.push([piece.x + 1, piece.y - 1 * n, "#800080"]);
       break;
     case "Knight":
       const moves = [
@@ -200,9 +202,9 @@ function getSquares(piece) {
       for (const m of moves) {
         const p = getPieceAt(...m);
         if (p === undefined)
-          validMoves.push(m.concat("#0000ff55"));
+          validMoves.push(m.concat("#ba55d3"));
         else if (p.color !== piece.color)
-          validMoves.push(m.concat("#ff000055"));
+          validMoves.push(m.concat("#800080"));
       }
       break;
     case "Bishop":
@@ -214,10 +216,10 @@ function getSquares(piece) {
             const p = getPieceAt(x, y);
             if (p !== undefined) {
               if (p.color !== piece.color)
-                validMoves.push([x, y, "#ff000055"]);
+                validMoves.push([x, y, "#ba55d3"]);
               break;
             }
-            validMoves.push([x, y, "#0000ff55"]);
+            validMoves.push([x, y, "#800080"]);
             x += dx;
             y += dy;
           }
@@ -233,10 +235,10 @@ function getSquares(piece) {
           const p = getPieceAt(x, y);
           if (p !== undefined) {
             if (p.color !== piece.color)
-              validMoves.push([x, y, "#ff000055"]);
+              validMoves.push([x, y, "#ba55d3"]);
             break;
           }
-          validMoves.push([x, y, "#0000ff55"]);
+          validMoves.push([x, y, "#800080"]);
           x += dx;
           y += dy;
         }
@@ -248,10 +250,10 @@ function getSquares(piece) {
           const p = getPieceAt(x, y);
           if (p !== undefined) {
             if (p.color !== piece.color)
-              validMoves.push([x, y, "#ff000055"]);
+              validMoves.push([x, y, "#ba55d3"]);
             break;
           }
-          validMoves.push([x, y, "#0000ff55"]);
+          validMoves.push([x, y, "#800080"]);
           x += dx;
           y += dy;
         }
@@ -266,10 +268,10 @@ function getSquares(piece) {
             const p = getPieceAt(x, y);
             if (p !== undefined) {
               if (p.color !== piece.color)
-                validMoves.push([x, y, "#ff000055"]);
+                validMoves.push([x, y, "#ba55d3"]);
               break;
             }
-            validMoves.push([x, y, "#0000ff55"]);
+            validMoves.push([x, y, "#800080"]);
             x += dx;
             y += dy;
           }
@@ -282,24 +284,24 @@ function getSquares(piece) {
           const y = piece.y + dy;
           const p = getPieceAt(x, y);
           if (p === undefined)
-            validMoves.push([x, y, "#0000ff55"]);
+            validMoves.push([x, y, "#ba55d3"]);
           else if (p.color !== piece.color)
-            validMoves.push([x, y, "#ff000055"]);
+            validMoves.push([x, y, "#800080"]);
         }
       if (!piece.moved) {
         let left = getPieceAt(0, piece.y);
         let right = getPieceAt(7, piece.y);
         if (left !== undefined && !left.moved && getPieceAt(1, piece.y) === undefined && getPieceAt(2, piece.y) === undefined && getPieceAt(3, piece.y) === undefined)
-          validMoves.push([piece.x - 2, piece.y, "#0000ff55"])
+          validMoves.push([piece.x - 2, piece.y, "#ba55d3"])
         if (right !== undefined && !right.moved && getPieceAt(6, piece.y) === undefined && getPieceAt(5, piece.y) === undefined)
-          validMoves.push([piece.x + 2, piece.y, "#0000ff55"])
+          validMoves.push([piece.x + 2, piece.y, "#800080"])
       }
       break;
   }
   validMoves = validMoves.filter(m => m[0] >= 0 && m[0] < 8 && m[1] >= 0 && m[1] < 8);
   return validMoves;
 }
-//checking for squares for the king to escape from check and highliting them
+/************************************************************************************************ check logic ****************/
 function getSquaresChecked(piece) {
   validMoves = getSquares(piece);
   for (const move of validMoves) {
@@ -330,7 +332,7 @@ function inCheck() {
       return true;
   return false;
 }
-//helper function for drawing the pieces
+/**************************************************************** helper functions ****************************************************************/
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let x = 0; x < 8; ++x)
