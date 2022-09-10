@@ -29,13 +29,15 @@ addEventListener("mousedown", e => {
       validMoves = getSquaresChecked(moving);
   }
 });
+
 //eventlistener for piece following the cursor
-addEventListener("mousemove", e => {
+addEventListener("mousemove", e => { 
   if (moving !== null) {
     const rect = canvas.getBoundingClientRect();
     moving.moveDispTo(e.clientX - rect.x, e.clientY - rect.y);
   }
 });
+
 //eventlistener for moving the piece
 addEventListener("mouseup", e => {
   if (moving !== null) {
