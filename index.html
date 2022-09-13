@@ -4,16 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript">if (!window.console) console = {log: function() {}};</script>
     <link rel="stylesheet" href="style/style.css"/>
-    <link rel="stylesheet" href="style/board.css"/>
     <title>Chess.com 2</title>
 </head>
 <body>
+    <header>
+        <h3>JS Chess</h3>
+    </header>
 
-    <!-- For chess pieces: https://www.i2symbol.com/symbols/chess -->
+    <div id="FenInDiv">
+        Fen: <br/>
+        <input type="text" id="fenIn"/>
+        <button type="button" id="SetFen">Set Position</button>
+    </div>
 
-    <canvas id="board"></canvas>  
-    <div id="message"></div>  
-    <script type="module" src="./scripts/game.js"></script>
+    <!-- Tutorial video #28 -->
+    
+    <script src="scripts/jquery-3.6.1.min.js"></script>
+    <script src="scripts/defs.js"></script>
+    <script src="scripts/io.js"></script>
+    <script src="scripts/board.js"></script>
+    <script src="scripts/moveGen.js"></script>
+    <script src="scripts/gui.js"></script>
+    <script src="scripts/game.js"></script>
 </body>
 </html>
