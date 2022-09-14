@@ -105,13 +105,13 @@ function fromSquare(move) {
     return (move & 0x7F)
 }
 function toSquare(move) {
-    return ((move <<7) & 0xF7);
+    return ((move >> 7) & 0xF7);
 }
 function captured(move) {
-    return ((move << 14) & 0xF);
+    return ((move >> 14) & 0xF);
 }
 function promoted(move) {
-    return ((move << 20) & 0xF);
+    return ((move >> 20) & 0xF);
 }
 
 var moveFlagEnPassant = 0x40000;
