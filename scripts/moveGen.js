@@ -1,21 +1,21 @@
 
 function MOVE(from, to, captured, promoted, flag) {
-    return (from | (to << 7) | (captured << 14) | (promoted << 20) | flag);
+	return (from | (to << 7) | (captured << 14) | (promoted << 20) | flag);
 }
 
-function addCaptureMove() {
-    gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply + 1]] = MOVE;
-    gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply + 1]++] = 0;
+function addCaptureMove(move) {
+	gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply+1]] = move;
+	gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply+1]++] = 0;
 }
 
-function addQuietMove() {
-    gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply + 1]] = MOVE;
-    gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply + 1]++] = 0;
+function addQuietMove(move) {
+	gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply+1]] = move;
+	gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply+1]++] = 0;
 }
 
-function addEnPassantMove() {
-    gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply + 1]] = MOVE;
-    gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply + 1]++] = 0;
+function addEnPassantMove(move) {
+	gameBoard.moveList[gameBoard.moveListStart[gameBoard.ply+1]] = move;
+	gameBoard.moveScores[gameBoard.moveListStart[gameBoard.ply+1]++] = 0;
 }
 
 /**************************************************************** functions to generate moves for the pawns *************************/

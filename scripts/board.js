@@ -27,8 +27,8 @@ gameBoard.pieceNumber = new Array(13); // an array list of
 gameBoard.pieceList = new Array(14 * 10); // an array list of all pieces
 gameBoard.positionKey = 0; // a number representing the position on the board
 
-gameBoard.moveList = new Array(MAXDEPTH, MAXPOSITIONMOVES);
-gameBoard.moveScores = new Array(MAXDEPTH, MAXPOSITIONMOVES);
+gameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
+gameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 gameBoard.moveListStart = new Array(MAXDEPTH);
 
 //prints the current board to the console
@@ -38,7 +38,7 @@ function printBoardToConsole() {
     console.log("\nGame Board\n");
 
     for (rank = RANKS.RANK_8; rank >= RANKS.RANK_1; rank--) {
-        var line = (rankChar[rank] + "");
+        var line = (RankChar[rank] + "");
         for (file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
             square = getSquareOutOfFileAndRank(file, rank);
             piece = gameBoard.pieces[square];
@@ -48,7 +48,7 @@ function printBoardToConsole() {
     }
     var line = " ";
     for (file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
-        line += (' ' + fileChar[file] + ' ');
+        line += (' ' + FileChar[file] + ' ');
     }
 
     console.log(line);

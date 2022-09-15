@@ -11,8 +11,6 @@ var PIECES = { EMPTY : 0, wP: 1, wN : 2, wB : 3, wR : 4, wQ : 5, wK : 6,bP : 7, 
 
 // Number of squares
 var boardSquareNumber = 120;
-var square120To64 = new Array(boardSquareNumber);
-var square64To120 = new Array(64);
 
 // Making each file and rank callable
 // Example: RANKS.Rank_8:7 calles the rank 8
@@ -47,8 +45,8 @@ var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 var pieceChar = ".PNBRQKpnbrqk";
 var sideChar = "wb-";
-var rankChar = "12345678";
-var fileChar = "abcdefgh";
+var RankChar = "12345678";
+var FileChar = "abcdefgh";
 
 function getSquareOutOfFileAndRank(file, rank) {
     return ( (21 + (file) ) + ( (rank) * 10) );
@@ -57,7 +55,7 @@ function getSquareOutOfFileAndRank(file, rank) {
 var PieceBig = [ BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE ];
 var PieceMaj = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE ];
 var PieceMin = [ BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE ];
-var PieceVal= [ 0, 1, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000  ];
+var PieceVal= [ 0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000  ];
 var PieceCol = [ COLOURS.BOTH, COLOURS.WHITE, COLOURS.WHITE, COLOURS.WHITE, COLOURS.WHITE, COLOURS.WHITE, COLOURS.WHITE,
 	COLOURS.BLACK, COLOURS.BLACK, COLOURS.BLACK, COLOURS.BLACK, COLOURS.BLACK, COLOURS.BLACK ];
 	
@@ -84,6 +82,9 @@ var pieceKeys = new Array(14 * 120);
 var sideKey;
 var castleKeys = new Array(16);
 
+var Sq120ToSq64 = new Array(boardSquareNumber);
+var Sq64ToSq120 = new Array(64);
+
 function RAND_32() {
     return (Math.floor((Math.random() * 255) + 1) << 23) | (Math.floor((Math.random() * 255) + 1) << 16) | 
     (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
@@ -92,27 +93,19 @@ function RAND_32() {
 //functions to translate between the two different board values (view images/explanations)
 
 function square64(square120) {
-    return square120To64[(square120)]
+    return Sq120ToSq64[(square120)]
 }
 function square120(square64) {
-    return square64To120[(square64)];
+    return Sq64ToSq120[(square64)];
 }
 function pieceIndex(piece, pieceNum) {
     return (piece * 10 + pieceNum);
 }
 
-function fromSquare(move) {
-    return (move & 0x7F)
-}
-function toSquare(move) {
-    return ((move >> 7) & 0xF7);
-}
-function captured(move) {
-    return ((move >> 14) & 0xF);
-}
-function promoted(move) {
-    return ((move >> 20) & 0xF);
-}
+function FROMSQ(m) { return (m & 0x7F); }
+function TOSQ(m) { return ( (m >> 7) & 0x7F); }
+function CAPTURED(m) { return ( (m >> 14) & 0xF); }
+function PROMOTED(m) { return ( (m >> 20) & 0xF); }
 
 var moveFlagEnPassant = 0x40000;
 var moveFlagPawnStart = 0x80000;

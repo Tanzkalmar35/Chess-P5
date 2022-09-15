@@ -46,18 +46,18 @@ function initSquare120To64() {
   var square64 = 0;
 
   for (var i = 0; i < boardSquareNumber; i++) {
-    square120To64[i] = 65;
+    Sq120ToSq64[i] = 65;
   }
 
   for (var i = 0; i < 64; i++) {
-    square64To120[i] = 120;
+    Sq64ToSq120[i] = 120;
   }
 
   for (rank = RANKS.RANK_1; rank <= RANKS.RANK_8; rank++) {
     for (file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
       square = getSquareOutOfFileAndRank(file, rank);
-      square64To120[square64] = square;
-      square120To64[square] = square64;
+      Sq64ToSq120[square64] = square;
+      Sq120ToSq64[square] = square64;
       square64++;
     }
   }
