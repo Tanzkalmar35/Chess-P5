@@ -7,15 +7,17 @@
 
 // Giving each piece a int to just pass in this int to place pieces
 // Example: if (x == 12) {do sth.} Checking if x is the king
-var PIECES = { EMPTY : 0, wP: 1, wN : 2, wB : 3, wR : 4, wQ : 5, wK : 6,bP : 7, bN : 8, bB : 9, bR : 10, bQ : 11, bK : 12 };
+var PIECES =  { EMPTY : 0, wP : 1, wN : 2, wB : 3,wR : 4, wQ : 5, wK : 6, 
+    bP : 7, bN : 8, bB : 9, bR : 10, bQ : 11, bK : 12  };
 
 // Number of squares
 var boardSquareNumber = 120;
 
 // Making each file and rank callable
 // Example: RANKS.Rank_8:7 calles the rank 8
-var FILES = { FILE_A:0, FILE_B:1, FILE_C:2, FILE_D:3, FILE_E:4, FILE_F:5, FILE_G:6, FILE_H:7, FILE_NONE:8 };
-var RANKS = { RANK_1:0, RANK_2:1, RANK_3:2, RANK_4:3, RANK_5:4, RANK_6:5, RANK_7:6, RANK_8:7, RANK_NONE:8 };
+var FILES =  { FILE_A:0, FILE_B:1, FILE_C:2, FILE_D:3, FILE_E:4, FILE_F:5, FILE_G:6, FILE_H:7, FILE_NONE:8 };
+	
+var RANKS =  { RANK_1:0, RANK_2:1, RANK_3:2, RANK_4:3, RANK_5:4, RANK_6:5, RANK_7:6, RANK_8:7, RANK_NONE:8 };
 
 // Making each color (or both) easily callable
 var COLOURS = { WHITE:0, BLACK:1, BOTH:3 };
@@ -33,7 +35,7 @@ var SQUARES = {
 //example: BOOL.FALSE as false
 var BOOL = { FALSE:0, TRUE: 1};
 
-var MAXGAMEMOVES = 2048; // storing the list of moves, that the board has in the current position
+var MAXGAMEMOVES = 2048; // 
 var MAXPOSITIONMOVES = 256; //
 var MAXDEPTH = 64; //
 
@@ -41,7 +43,7 @@ var MAXDEPTH = 64; //
 var filesBoard = new Array(boardSquareNumber);
 var ranksBoard = new Array(boardSquareNumber);
 
-var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+var START_FEN = "3qkb1r/ppbpprrp/8/5nb1/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1";
 
 var pieceChar = ".PNBRQKpnbrqk";
 var sideChar = "wb-";
@@ -86,8 +88,8 @@ var Sq120ToSq64 = new Array(boardSquareNumber);
 var Sq64ToSq120 = new Array(64);
 
 function RAND_32() {
-    return (Math.floor((Math.random() * 255) + 1) << 23) | (Math.floor((Math.random() * 255) + 1) << 16) | 
-    (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
+    return (Math.floor((Math.random() * 255) + 1) << 23) | (Math.floor((Math.random() * 255) + 1) << 16)
+         | (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
 }
 
 //functions to translate between the two different board values (view images/explanations)
@@ -101,6 +103,16 @@ function square120(square64) {
 function pieceIndex(piece, pieceNum) {
     return (piece * 10 + pieceNum);
 }
+
+/*	
+0000 0000 0000 0000 0000 0111 1111 -> From 0x7F
+0000 0000 0000 0011 1111 1000 0000 -> To >> 7, 0x7F
+0000 0000 0011 1100 0000 0000 0000 -> Captured >> 14, 0xF
+0000 0000 0100 0000 0000 0000 0000 -> EP 0x40000
+0000 0000 1000 0000 0000 0000 0000 -> Pawn Start 0x80000
+0000 1111 0000 0000 0000 0000 0000 -> Promoted Piece >> 20, 0xF
+0001 0000 0000 0000 0000 0000 0000 -> Castle 0x1000000
+*/
 
 function FROMSQ(m) { return (m & 0x7F); }
 function TOSQ(m) { return ( (m >> 7) & 0x7F); }

@@ -4,7 +4,7 @@ $(function() {
   parseFen(START_FEN);
   printBoardToConsole();
   generateMoves();
-  printMoveList();
+  PrintMoveList();
 });
 
 function initFilesAndRanksBoard() {

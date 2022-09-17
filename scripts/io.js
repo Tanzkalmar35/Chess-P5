@@ -30,7 +30,7 @@ function PrMove(move) {
 	return MvStr;
 }
 
-function printMoveList() {
+function PrintMoveList() {
 
 	var index;
 	var move;
