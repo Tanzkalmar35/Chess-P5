@@ -88,7 +88,7 @@ function generateMoves() {
 				AddWhitePawnCaptureMove(square, square + 9, gameBoard.pieces[square+9]);
 			}
 			
-			if(SQOFFBOARD(square + 11) == BOOL.FALSE && PieceCol[gameBoard.pieces[square+11]] == COLOURS.BLACK) {
+			if(squareOffBoard(square + 11) == BOOL.FALSE && PieceCol[gameBoard.pieces[square+11]] == COLOURS.BLACK) {
 				AddWhitePawnCaptureMove(square, square + 11, gameBoard.pieces[square+11]);
 			}			
 			

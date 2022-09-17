@@ -43,7 +43,7 @@ var MAXDEPTH = 64; //
 var filesBoard = new Array(boardSquareNumber);
 var ranksBoard = new Array(boardSquareNumber);
 
-var START_FEN = "3qkb1r/ppbpprrp/8/5nb1/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1";
+var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 var pieceChar = ".PNBRQKpnbrqk";
 var sideChar = "wb-";
