@@ -3,8 +3,7 @@ $(function() {
   console.log("Main Init Called");
   parseFen(START_FEN);
   printBoardToConsole();
-  generateMoves();
-  PrintMoveList();
+  
 });
 
 function initFilesAndRanksBoard() {
@@ -61,7 +60,24 @@ function initSquare120To64() {
       square64++;
     }
   }
+}
 
+function initBoardVariables() {
+  for (var i = 0; i < MAXGAMEMOVES; i++) {
+    gameBoard.history.push({
+      move: noMove,
+      castlePerm : 0,
+      enPassant : 0,
+      fiftyMove : 0,
+      posKey : 0
+   });
+  }
+  for (var i = 0; i < PVENTRIES; i++) {
+    gameBoard.pvTable.push({
+      move: noMove,
+      posKey: 0
+    });
+  }
 }
 
 function init() {
@@ -69,4 +85,5 @@ function init() {
   initFilesAndRanksBoard();
   initHashKeys();
   initSquare120To64();
+  initBoardVariables();
 }

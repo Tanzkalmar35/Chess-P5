@@ -8,6 +8,7 @@ gameBoard.pieces = new Array(boardSquareNumber); // array for the pieces
 gameBoard.side = COLOURS.WHITE; // the side you are playing
 gameBoard.fiftyMove = 0; // after 50 moves made without pawn move or capture, players can draw. -> increasing it with every move and tracking if it hits 50
 gameBoard.hisPly = 0; // count of every move made in the game
+gameBoard.history = []; // the move history
 gameBoard.ply = 0; // number of half moves made in the search tree
 gameBoard.enPassant = 0; // number for en passant squares
 
@@ -30,6 +31,59 @@ gameBoard.positionKey = 0; // a number representing the position on the board
 gameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 gameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 gameBoard.moveListStart = new Array(MAXDEPTH);
+
+gameBoard.pvTable = [];
+gameBoard.pvArray = new Array(MAXDEPTH);
+gameBoard.searchHistory = new Array(14 * boardSquareNumber);
+gameBoard.searchKillers = new Array(3 * MAXDEPTH);
+
+//checks for the board if everything is alright and throws errors if not
+function checkBoard() {
+
+    var temporaryTargetPieceNumber = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    var targetMaterial = [ 0, 0 ];
+    var Square64, targetPiece, targetPieceNumber, Square120, colour, pieceCount;
+
+    for (targetPiece = PIECES.wP; targetPiece < PIECES.bK; targetPiece++) {
+        for (targetPieceNumber = 0; targetPieceNumber < gameBoard.pieceNumber[targetPiece]; targetPieceNumber++) {
+            Square120 = gameBoard.pieceList[PIECEINDEX(targetPiece, targetPieceNumber)];
+            if (gameBoard.pieces[Square120] != targetPiece) {
+                console.log("Error piece Lists");
+                return BOOL.FALSE;
+            }
+        }
+    }
+
+    for (Square64 = 0; Square64 < 64; Square64++) {
+        Square120 = square120(Square64);
+        targetPiece = gameBoard.pieces[Square120];
+        temporaryTargetPieceNumber[targetPiece]++;
+        targetMaterial[PieceCol[targetPiece]] += PieceVal[targetPiece];
+    }
+
+    for (targetPiece = PIECES.wP; targetPiece <= PIECES.bK; targetPiece++) {
+        if (temporaryTargetPieceNumber[targetPiece] != gameBoard.pieceNumber[targetPiece]) {
+            console.log("Error temporaryTargetPieceNumber");
+            return BOOL.FALSE;
+        }
+    }
+
+    if (targetMaterial[COLOURS.WHITE] != gameBoard.material[COLOURS.WHITE] || 
+        targetMaterial[COLOURS.BLACK] != gameBoard.material[COLOURS.BLACK]) {
+            console.log("Error targetMaterial");
+            return BOOL.FALSE;
+    }
+
+    if (gameBoard.side != COLOURS.WHITE && gameBoard.side != COLOURS.BLACK) {
+        console.log("Error gameBoard.side");
+    }
+
+    if (generatePositionKey() != gameBoard.positionKey) {
+        //console.log("Error gameBoard.positionKey");
+        return BOOL.FALSE;
+    }
+    return BOOL.TRUE;
+}
 
 //prints the current board to the console
 function printBoardToConsole() {
@@ -67,6 +121,7 @@ function printBoardToConsole() {
 }
 
 function generatePositionKey() {
+
     var square = 0;
     var finalKey = 0;
     var piece = PIECES.EMPTY;
@@ -268,7 +323,6 @@ function printSquareAttacked() {
         }
         console.log(line);
     }
-    console.log("");
 }
 
 //this function checks for the squares attacked on the board

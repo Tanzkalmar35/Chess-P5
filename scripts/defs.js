@@ -38,6 +38,9 @@ var BOOL = { FALSE:0, TRUE: 1};
 var MAXGAMEMOVES = 2048; // 
 var MAXPOSITIONMOVES = 256; //
 var MAXDEPTH = 64; //
+var INFINITE = 30000; //
+var MATE = 29000;
+var PVENTRIES = 10000;
 
 //creating arrays for the files and ranks
 var filesBoard = new Array(boardSquareNumber);
@@ -92,6 +95,21 @@ function RAND_32() {
          | (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
 }
 
+var mirror64 = [
+    56, 57, 58, 59, 60, 61, 62, 63,
+    48, 49, 50, 51, 52, 53, 54, 55,
+    40, 41, 42, 43, 44, 45, 46, 47,
+    32, 33, 34, 35, 36, 37, 38, 39,
+    24, 25, 26, 27, 28, 29, 30, 31,
+    16, 17, 18, 19, 20, 21, 22, 23,
+     8,  9, 10, 11, 12, 13, 14, 15,
+     0,  1,  2,  3,  4,  5,  6,  7
+];
+
+function MIRROR64(square) {
+    return mirror64[square];
+}
+
 //functions to translate between the two different board values (view images/explanations)
 
 function square64(square120) {
@@ -103,6 +121,23 @@ function square120(square64) {
 function pieceIndex(piece, pieceNum) {
     return (piece * 10 + pieceNum);
 }
+
+var kings = [PIECES.wK, PIECES.bK];
+
+var castlePerm = [
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 13, 15, 15, 15, 12, 15, 15, 14, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15,  7, 15, 15, 15,  3, 15, 15, 11, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15
+];
 
 /*	
 0000 0000 0000 0000 0000 0111 1111 -> From 0x7F
@@ -121,7 +156,7 @@ function PROMOTED(m) { return ( (m >> 20) & 0xF); }
 
 var moveFlagEnPassant = 0x40000;
 var moveFlagPawnStart = 0x80000;
-var moveFlagCastle = 0x100000;
+var moveFlagCastle = 0x1000000;
 
 var moveFlagCaptured = 0x7C000;
 var moveFlagPromotion = 0xF00000;
@@ -132,3 +167,13 @@ function squareOffBoard(square) {
     if (filesBoard[square] == SQUARES.OFFBOARD) return BOOL.TRUE;
     return BOOL.FALSE;
 }
+
+function hashPiece(pce, sq) {
+	gameBoard.positionKey ^= pieceKeys[(pce * 120) + sq];
+}
+
+function hashCastle() { gameBoard.positionKey ^= castleKeys[gameBoard.castlePerm]; }
+
+function hashSide() { gameBoard.positionKey ^= sideKey; }
+
+function HashEnPassant() { gameBoard.positionKey ^= pieceKeys[gameBoard.enPassant]; }
