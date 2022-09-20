@@ -6,7 +6,7 @@ function probePvTable() {
     if (gameBoard.pvTable[i].positionKey == gameBoard.positionKey) {
         return gameBoard.pvTable[i].move;
     }
-    return gameBoard.pvTable[i].move;
+    return noMove;
 }
 
 function storePvMove(move) {

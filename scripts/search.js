@@ -49,8 +49,8 @@ function alphaBeta(alpha, beta, depth) {
     if ((isRepitition() || gameBoard.fiftyMove >= 100) && gameBoard.ply != 0) {
         return 0;
     }
-
-    if (gameBoard.ply < MAXDEPTH - 1) {
+    
+    if (gameBoard.ply > MAXDEPTH - 1) {
         return evaluatePosition();
     }
 
@@ -111,9 +111,6 @@ function alphaBeta(alpha, beta, depth) {
 
     if (alpha != oldAlpha) {
         storePvMove(bestMove);
-        console.log("bestMove: " + bestMove);
-    } else {
-        console.log("alpha is equal to old alpha");
     }
 
     return alpha;
