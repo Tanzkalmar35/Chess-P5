@@ -140,6 +140,8 @@ function searchPosition() {
     var bestScore = -INFINITE;
     var currentdepth = 0;
     var line;
+    var pvNumber;
+    var i;
 
     clearForSearch();
 
@@ -153,7 +155,15 @@ function searchPosition() {
         }
 
         bestMove = probePvTable();
+
         line = "D: " + currentdepth + " Best: " + PrMove(bestMove) + " Score: " + bestScore + " Nodes: " + searchController.nodes;
+
+        pvNumber = getPvLine(currentdepth);
+        line += " Pv:";
+        for (i = 0; i < pvNumber; i++) {
+            line += " " + PrMove(gameBoard.pvArray[i]);
+        }
+
         console.log(line);
     }
 

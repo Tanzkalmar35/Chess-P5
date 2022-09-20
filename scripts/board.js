@@ -295,7 +295,7 @@ function parseFen(fen) {
 
     if (fen[fenDigitCount] != "-") {
         file = fen[fenDigitCount].charCodeAt() - "a".charCodeAt();
-        rank = fen[fenDigitCount].charCodeAt() - "1".charCodeAt();
+        rank = fen[fenDigitCount + 1].charCodeAt() - "1".charCodeAt();
         console.log("fen[fenDigitCount]: " + fen[fenDigitCount] + " File: " + file + " Rank: " + rank);
         gameBoard.enPassant = getSquareOutOfFileAndRank(file, rank);
     }

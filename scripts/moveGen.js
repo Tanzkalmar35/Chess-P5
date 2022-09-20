@@ -1,4 +1,21 @@
 
+function moveExists(move) {
+	generateMoves();
+
+	var moveFound = noMove;
+	for (var i = gameBoard.moveListStart[gameBoard.ply]; i < gameBoard.moveListStart[gameBoard.ply + 1]; i++) {
+		moveFound = gameBoard.moveList[i];
+		if (makeMove(moveFound) == BOOL.FALSE) {
+			continue;
+		}
+		takeMove();
+		if (move == moveFound) {
+			return BOOL.TRUE;
+		}
+	}
+	return BOOL.FALSE;
+}
+
 function MOVE(from, to, captured, promoted, flag) {
 	return (from | (to << 7) | (captured << 14) | (promoted << 20) | flag);
 }
