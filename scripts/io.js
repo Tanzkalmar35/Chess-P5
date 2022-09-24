@@ -1,45 +1,95 @@
-function printSquare(sq) {
-	return (FileChar[filesBoard[sq]] + RankChar[ranksBoard[sq]]);
+function printSquare(square) {
+	return (fileChar[filesBoard[square]] + rankChar[ranksBoard[square]]);
 }
 
-function PrMove(move) {	
-	var MvStr;
-
-	console.log(move);
+function printMove(move) {	
+	var moveString;
 	
-	var ff = filesBoard[FROMSQ(move)];
-	var rf = ranksBoard[FROMSQ(move)];
-	var ft = filesBoard[TOSQ(move)];
-	var rt = ranksBoard[TOSQ(move)];
-
-	MvStr = FileChar[ff] + RankChar[rf] + FileChar[ft] + RankChar[rt];
-
+	var fromFile = filesBoard[FROMSQ(move)];
+	var fromRank = ranksBoard[FROMSQ(move)];
+	var toFile = filesBoard[TOSQ(move)];
+	var toRank = ranksBoard[TOSQ(move)];
+	
+	moveString = fileChar[fromFile] + rankChar[fromRank] + fileChar[toFile] + rankChar[toRank];
+	
 	var promoted = PROMOTED(move);
 
 	if(promoted != PIECES.EMPTY) {
-		var pchar = 'q';
-		if(PieceKnight[promoted] == BOOL.TRUE) {
-			pchar = 'n';
-		} else if(PieceRookQueen[promoted] == BOOL.TRUE && PieceBishopQueen[promoted] == BOOL.FALSE)  {
-			pchar = 'r';
-		} else if(PieceRookQueen[promoted] == BOOL.FALSE && PieceBishopQueen[promoted] == BOOL.TRUE)   {
-			pchar = 'b';
+		var pieceChar = 'q';
+		if(pieceKnight[promoted] == BOOL.TRUE) {
+			pieceChar = 'n';
+		} else if(pieceRookQueen[promoted] == BOOL.TRUE && pieceBishopQueen[promoted] == BOOL.FALSE)  {
+			pieceChar = 'r';
+		} else if(pieceRookQueen[promoted] == BOOL.FALSE && pieceBishopQueen[promoted] == BOOL.TRUE)   {
+			pieceChar = 'b';
 		}
-		MvStr += pchar;
+		moveString += pieceChar;
 	}
-	return MvStr;
+	return moveString;
 }
 
-function PrintMoveList() {
+function printMoveList() {
 
-	var index;
 	var move;
-	var num = 1;
+	var number = 1;
 	console.log('MoveList:');
 
-	for(index = gameBoard.moveListStart[gameBoard.ply]; index < gameBoard.moveListStart[gameBoard.ply+1]; ++index) {
+	for(var i = gameBoard.moveListStart[gameBoard.ply]; i < gameBoard.moveListStart[gameBoard.ply+1]; ++i) {
 		move = gameBoard.moveList[index];
-		console.log('Move:' + num + ':' + PrMove(move));
-		num++;
+		console.log('Move:' + number + ':' + printMove(move));
+		number++;
 	}
+	console.log('End MoveList');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

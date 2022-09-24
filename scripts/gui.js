@@ -1,7 +1,6 @@
-$("#SetFen").click(function() {
-    var fenString = $("#fenIn").val();
-    parseFen(fenString);
-    printBoardToConsole();
-    searchPosition();
-    //perftTest(5);
+$("#SetFen").click(function () {
+	var fenStr = $("#fenIn").val();	
+	ParseFen(START_FEN);
+	printBoard();
+	searchPosition();
 });
