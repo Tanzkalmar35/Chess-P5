@@ -42,54 +42,36 @@ function printMoveList() {
 	console.log('End MoveList');
 }
 
+function parseMove(from, to) {
+	
+	generateMoves();
 
+	var move = noMove;
+	var promotionPiece = PIECES.EMPTY;
+	var found = BOOL.FALSE;
 
+	for (var i = gameBoard.moveListStart[gameBoard.ply]; i < gameBoard.moveListStart[gameBoard.ply + 1]; i++) {
+		move = gameBoard.moveList[i];
+		if (FROMSQ(move) == from && TOSQ(move) == to) {
+			promotionPiece = PROMOTED(move);
+			if (promotionPiece != PIECES.EMPTY) {
+				if ((promotionPiece == PIECES.wQ && gameBoard.side == COLOURS.WHITE) || (promotionPiece == PIECES.bQ && gameBoard.side == COLOURS.BLACK)) {
+					found = BOOL.TRUE;
+					break;
+				}
+				continue;
+			}
+			found = BOOL.TRUE;
+			break;
+		}
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	if (found != BOOL.FALSE) {
+		if (makeMove(move) == BOOL.FALSE) {
+			return noMove;
+		}
+		takeMove();
+		return move;
+	}
+	return noMove;
+}

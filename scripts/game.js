@@ -1,8 +1,7 @@
 $(function() {
 	init();
 	console.log("Main Init Called");	
-	ParseFen(START_FEN);
-	printBoard();
+	newGame(START_FEN);
 });
 
 function initFilesRanksBoard() {

@@ -162,47 +162,12 @@ function HASH_CASTLE() { gameBoard.positionKey ^= castleKeys[gameBoard.castlePer
 function HASH_SIDE() { gameBoard.positionKey ^= sideKey; }
 function HASH_ENPASSANT() { gameBoard.positionKey ^= pieceKeys[gameBoard.enPassant]; }
 
+var gameController = {};
 
+gameController.engineSide = COLOURS.BOTH;
+gameController.playerSide = COLOURS.BOTH;
+gameController.gameOver = BOOL.FALSE;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var userMove = {};
+userMove.from = SQUARES.NO_SQ;
+userMove.to = SQUARES.NO_SQ;

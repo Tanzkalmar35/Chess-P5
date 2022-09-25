@@ -51,3 +51,9 @@
 .file6 { left: 400px; }
 .file7 { left: 480px; }
 .file8 { left: 560px; }
+
+.piece {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}
