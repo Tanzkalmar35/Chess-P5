@@ -178,8 +178,6 @@ function UpdateListsMaterial() {
 		}
 	}
 	
-	printPieceLists();
-	
 }
 
 function ResetBoard() {
@@ -295,7 +293,6 @@ function ParseFen(fen) {
 	
 	gameBoard.positionKey = generatePosKey();	
 	UpdateListsMaterial();
-	PrintSqAttacked();
 }
 
 function PrintSqAttacked() {

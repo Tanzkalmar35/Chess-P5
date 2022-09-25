@@ -1,3 +1,5 @@
+// EXPLANATION: Killer moves are moves that have a better score than beta.
+
 var searchController = {};
 
 searchController.nodes;
@@ -9,6 +11,30 @@ searchController.start;
 searchController.stop;
 searchController.best;
 searchController.thinking;
+
+function pickNextMove(moveNumber) {
+	var bestScore = -1;
+	var bestNumber = moveNumber;
+
+	for (var i = moveNumber; i < gameBoard.moveListStart[gameBoard.ply + 1]; i++) {
+		if (gameBoard.moveScores[i] > bestScore) {
+			bestScore = gameBoard.moveScores[i];
+			bestNumber = i;
+		}
+	}
+
+	if (bestNumber != moveNumber) {
+		var temp = 0;
+		temp = gameBoard.moveScores[moveNumber];
+		gameBoard.moveScores[moveNumber] = gameBoard.moveScores[bestNumber];
+		gameBoard.moveScores[bestNumber] = temp;
+
+		temp = gameBoard.moveList[moveNumber];
+		gameBoard.moveList[moveNumber] = gameBoard.moveList[bestNumber];
+		gameBoard.moveList[bestNumber] = temp;
+	}
+
+}
 
 function clearPvTable() {
 	
@@ -36,18 +62,101 @@ function isRepetition() {
 	return BOOL.FALSE;
 }
 
-function alphaBeta(alpha, beta, depth) {
+function quieScence(alpha, beta) {
+
+	if ((searchController.nodes & 2047) == 0) {
+		checkUp();
+	}
 
 	searchController.nodes++;
-	if(depth <= 0) {
+	
+	if( (isRepetition() || gameBoard.fiftyMove >= 100) && gameBoard.ply != 0) {
+		return 0;
+	}
+	
+	if(gameBoard.ply > MAXDEPTH -1) {
 		return evalPosition();
+	}
+
+	var score = evalPosition();
+
+	if (score >= beta) {
+		return beta;
+	} 
+
+	if (score > alpha) {
+		alpha = score;
+	}
+
+	generateCaptures();
+	
+	var MoveNum = 0;
+	var Legal = 0;
+	var OldAlpha = alpha;
+	var BestMove = noMove;
+	var Move = noMove;
+	
+	var pvMove = probePvTable();
+	if (pvMove != noMove) {
+		for(MoveNum = gameBoard.moveListStart[gameBoard.ply]; MoveNum < gameBoard.moveListStart[gameBoard.ply + 1]; ++MoveNum) {
+			if (gameBoard.moveList[MoveNum] == pvMove) {
+				gameBoard.moveScores[MoveNum] = 2000000;
+				break;
+			}
+		}
+	
+	}		
+	
+	for(MoveNum = gameBoard.moveListStart[gameBoard.ply]; MoveNum < gameBoard.moveListStart[gameBoard.ply + 1]; ++MoveNum) {
+	
+		pickNextMove(MoveNum);
+		
+		Move = gameBoard.moveList[MoveNum];	
+
+		if(makeMove(Move) == BOOL.FALSE) {
+			continue;
+		}		
+		Legal++;
+		score = -quieScence( -beta, -alpha);
+		
+		takeMove();
+		
+		if(searchController.stop == BOOL.TRUE) {
+			return 0;
+		}
+		
+		if(score > alpha) {
+			if(score >= beta) {
+				if(Legal == 1) {
+					searchController.fhf++;
+				}
+				searchController.fh++;				
+				return beta;
+			}
+			alpha = score;
+			BestMove = Move;
+		}		
+	}
+
+	if(alpha != OldAlpha) {
+		storePvMove(BestMove);
+	}
+
+	return alpha;
+
+}
+
+function alphaBeta(alpha, beta, depth) {
+
+	if(depth <= 0) {
+		return quieScence(alpha, beta);
 	}
 	
 	if ((searchController.nodes & 2047) == 0) {
 		checkUp();
 	}
-	
-	
+
+	searchController.nodes++;
 	
 	if( (isRepetition() || gameBoard.fiftyMove >= 100) && gameBoard.ply != 0) {
 		return 0;
@@ -73,12 +182,20 @@ function alphaBeta(alpha, beta, depth) {
 	var BestMove = noMove;
 	var Move = noMove;
 	
-	/* Get PvMove */
-	/* Order PvMove */	
+	var pvMove = probePvTable();
+	if (pvMove != noMove) {
+		for(MoveNum = gameBoard.moveListStart[gameBoard.ply]; MoveNum < gameBoard.moveListStart[gameBoard.ply + 1]; ++MoveNum) {
+			if (gameBoard.moveList[MoveNum] == pvMove) {
+				gameBoard.moveScores[MoveNum] = 2000000;
+				break;
+			}
+		}
+	
+	}	
 	
 	for(MoveNum = gameBoard.moveListStart[gameBoard.ply]; MoveNum < gameBoard.moveListStart[gameBoard.ply + 1]; ++MoveNum) {
 	
-		/* Pick Next Best Move */
+		pickNextMove(MoveNum);
 		
 		Move = gameBoard.moveList[MoveNum];	
 
@@ -100,13 +217,17 @@ function alphaBeta(alpha, beta, depth) {
 					searchController.fhf++;
 				}
 				searchController.fh++;				
-				/* Update Killer Moves */
-				
+				if ((Move & moveFlagCapture) == 0) {
+					gameBoard.searchKillers[MAXDEPTH + gameBoard.ply] = gameBoard.searchKillers[gameBoard.ply];
+					gameBoard.searchKillers[gameBoard.ply] = Move;
+				}
 				return beta;
+			}
+			if ((Move & moveFlagCapture) == 0) {
+				gameBoard.searchHistory[gameBoard.pieces[FROMSQ(Move)] * boardSquareNumber + TOSQ(Move)] += depth * depth;
 			}
 			alpha = Score;
 			BestMove = Move;
-			/* Update History Table */
 		}		
 	}	
 	
@@ -158,7 +279,7 @@ function searchPosition() {
 
 	clearForSearch();
 	
-	for( currentDepth = 1; currentDepth <= /*SearchController.depth*/ 5; ++currentDepth) {	
+	for( currentDepth = 1; currentDepth <= /*SearchController.depth*/ 6; ++currentDepth) {	
 	
 		bestScore = alphaBeta(-INFINITE, INFINITE, currentDepth);
 					
@@ -177,6 +298,9 @@ function searchPosition() {
 		for( c = 0; c < PvNum; ++c) {
 			line += ' ' + printMove(gameBoard.pvArray[c]);
 		}
+		if (currentDepth != 1) {
+			line += (" Ordering:" + ((searchController.fhf / searchController.fh) * 100).toFixed(2) + "%");
+		}
 		console.log(line);
 						
 	}
@@ -185,46 +309,3 @@ function searchPosition() {
 	searchController.thinking = BOOL.FALSE;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

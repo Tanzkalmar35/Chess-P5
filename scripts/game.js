@@ -84,12 +84,40 @@ function initBoardVariables() {
 	}
 }
 
+function initBoardSquares() {
+	var light = 1;
+	var rankName;
+	var fileName;
+	var divString;
+	var rankIterator;
+	var fileIterator;
+	var lightString;
+
+	for (rankIterator = RANKS.RANK_8; rankIterator >= RANKS.RANK_1; rankIterator--) {
+		light ^= 1;
+		rankName = "rank" + (rankIterator + 1);
+		for (fileIterator = FILES.FILE_A; fileIterator <= FILES.FILE_H; fileIterator++) {
+			fileName = "file" + (fileIterator + 1);
+			if (light == 0) {
+				lightString = "lightSquare";
+			} else {
+				lightString = "darkSquare";
+			}
+			light ^= 1;
+			divString = "<div class=\"square " + rankName + " " + fileName + " " + lightString + "\"/>";
+			$("#board").append(divString);
+		}
+	}
+}
+
 function init() {
 	console.log("init() called");
 	initFilesRanksBoard();
 	initHashKeys();
 	initSq120To64();
 	initBoardVariables();
+	initMvvLva();
+	initBoardSquares();
 }
 
 
