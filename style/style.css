@@ -6,3 +6,54 @@
     width: 50vw;
     left: 10vw;
 }
+#board {
+    position: relative;
+    top: 60px;
+    left: 600px;
+    width: 640px;
+    height: 640px;
+    border-style: solid;
+    border-width: 2px;
+}
+#engineOutput {
+    position: absolute;
+    left: 1400px;
+    top: 250px;
+}
+.square {
+    position: absolute;
+    width: 80px;
+    height: 80px
+}
+.darkSquare {
+    background-color: #5fbcd3;
+}
+.lightSquare {
+    background-color: #afdde9;
+}
+.squareSelected {
+    background-color: #216778;
+}
+.rank1 { top: 560px; }
+.rank2 { top: 480px; }
+.rank3 { top: 400px; }
+.rank4 { top: 320px; }
+.rank5 { top: 240px; }
+.rank6 { top: 160px; }
+.rank7 { top: 80px; }
+.rank8 { top: 0px; }
+
+.file1 { left: 0px; }
+.file2 { left: 80px; }
+.file3 { left: 160px; }
+.file4 { left: 240px; }
+.file5 { left: 320px; }
+.file6 { left: 400px; }
+.file7 { left: 480px; }
+.file8 { left: 560px; }
+
+.piece {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}
