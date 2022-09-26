@@ -15,6 +15,19 @@ $("#newGameButton").click(function () {
 	newGame(START_FEN);
 });
 
+$("#flipBoardButton").click(function () {
+
+	if (START_FEN == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr w KQkq - 0 1") {
+		START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		newGame(START_FEN);
+		gameBoard.side = COLOURS.BLACK;
+	} else if (START_FEN == "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
+		START_FEN = "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr w KQkq - 0 1";
+		newGame(START_FEN);
+		gameBoard.side = COLOURS.WHITE;
+	}
+});
+
 function newGame(fenString) {
 	ParseFen(fenString);
 	printBoard();
@@ -90,13 +103,15 @@ function clickedSquare(pageX, pageY) {
 $(document).on("click", ".piece", function (e) {
 	console.log("piece click");
 
-	if (userMove.from == SQUARES.NO_SQ) {
-		userMove.from = clickedSquare(e.pageX, e.pageY);
-	} else {
-		userMove.to = clickedSquare(e.pageX, e.pageY);
+	if (gameBoard.side == COLOURS.WHITE) {
+		if (userMove.from == SQUARES.NO_SQ) {
+			userMove.from = clickedSquare(e.pageX, e.pageY);			
+		} else {
+			userMove.to = clickedSquare(e.pageX, e.pageY);
+		}
+	
+		makeUserMove();
 	}
-
-	makeUserMove();
 
 });
 
