@@ -24,7 +24,7 @@ gameBoard.pvTable = [];
 gameBoard.pvArray = new Array(MAXDEPTH);
 gameBoard.searchHistory = new Array( 14 * boardSquareNumber);
 gameBoard.searchKillers = new Array(3 * MAXDEPTH);
-
+gameBoard.flipped = BOOL.FALSE;
 
 
 function checkBoard() {   

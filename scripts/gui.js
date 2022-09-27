@@ -17,6 +17,11 @@ $("#newGameButton").click(function () {
 
 $("#flipBoardButton").click(function () {
 
+	if (gameBoard.flipped == BOOL.FALSE) {
+		gameBoard.flipped = BOOL.TRUE;
+	} else if (gameBoard.flipped == BOOL.TRUE) {
+		gameBoard.flipped = BOOL.FALSE;
+	}
 	if (START_FEN == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr w KQkq - 0 1") {
 		START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 		newGame(START_FEN);
@@ -33,6 +38,9 @@ function newGame(fenString) {
 	printBoard();
 	setInitialBoardPieces();
 	checkAndSet();
+	if (gameBoard.flipped == BOOL.TRUE) {
+		preSearch();
+	}
 }
 
 function clearAllPieces() {
@@ -102,27 +110,34 @@ function clickedSquare(pageX, pageY) {
 
 $(document).on("click", ".piece", function (e) {
 	console.log("piece click");
-
-	if (gameBoard.side == COLOURS.WHITE) {
-		if (userMove.from == SQUARES.NO_SQ) {
-			userMove.from = clickedSquare(e.pageX, e.pageY);			
-		} else {
-			userMove.to = clickedSquare(e.pageX, e.pageY);
+	if (gameBoard.flipped == BOOL.FALSE) {
+		if (gameBoard.side == COLOURS.WHITE) {
+			if (userMove.from == SQUARES.NO_SQ) {
+				userMove.from = clickedSquare(e.pageX, e.pageY);			
+			} else {
+				userMove.to = clickedSquare(e.pageX, e.pageY);
+			}
+		
+			makeUserMove();
 		}
-	
-		makeUserMove();
+	} else if (gameBoard.flipped == BOOL.TRUE) {
+		if (gameBoard.side == COLOURS.BLACK) {
+			if (userMove.from == SQUARES.NO_SQ) {
+				userMove.from = clickedSquare(e.pageX, e.pageY);			
+			} else {
+				userMove.to = clickedSquare(e.pageX, e.pageY);
+			}
+			makeUserMove();
+		}
 	}
 
 });
 
 $(document).on("click", ".square", function (e) {
-	console.log("square click");
-
 	if (userMove.from != SQUARES.NO_SQ) {
 		userMove.to = clickedSquare(e.pageX, e.pageY);
 		makeUserMove();
 	}
-
 });
 
 function makeUserMove() {
@@ -130,13 +145,17 @@ function makeUserMove() {
 
 		console.log("User move: " + printSquare(userMove.from) + printSquare(userMove.to));
 
+		console.log(userMove.from + "---" + userMove.to);
 		var parsed = parseMove(userMove.from, userMove.to);
 		if (parsed != noMove) {
+			console.log("move made");
 			makeMove(parsed);
 			printBoard();
 			movePieceInGUI(parsed);
 			checkAndSet();
 			preSearch();
+		} else {
+			console.log("move not made");
 		}
  
 		deSelectSquare(userMove.from);
