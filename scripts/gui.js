@@ -229,8 +229,8 @@ function movePieceInGUI(move) {
 		switch(to) {
 			case SQUARES.G1: removePieceFromGUI(SQUARES.H1); addPieceToGUI(SQUARES.F1, PIECES.wR); break;
 			case SQUARES.C1: removePieceFromGUI(SQUARES.A1); addPieceToGUI(SQUARES.D1, PIECES.wR); break;
-			case SQUARES.G8: removePieceFromGUI(SQUARES.H8); addPieceToGUI(SQUARES.F8, PIECES.wR); break;
-			case SQUARES.C8: removePieceFromGUI(SQUARES.A8); addPieceToGUI(SQUARES.D1, PIECES.wR); break;
+			case SQUARES.G8: removePieceFromGUI(SQUARES.H8); addPieceToGUI(SQUARES.F8, PIECES.bR); break;
+			case SQUARES.C8: removePieceFromGUI(SQUARES.A8); addPieceToGUI(SQUARES.D1, PIECES.bR); break;
 		}
 	} else if (PROMOTED(move)) {
 		removePieceFromGUI(to);
