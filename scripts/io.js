@@ -52,6 +52,7 @@ function parseMove(from, to) {
 
 	for (var i = gameBoard.moveListStart[gameBoard.ply]; i < gameBoard.moveListStart[gameBoard.ply + 1]; i++) {
 		move = gameBoard.moveList[i];
+		console.log("FROMSQ: " + FROMSQ(move) + ", from: " + from + ", TOSQ: " + TOSQ(move) + ", to: " + to + "MOVE: " + move); 
 		if (FROMSQ(move) == from && TOSQ(move) == to) {
 			promotionPiece = PROMOTED(move);
 			if (promotionPiece != PIECES.EMPTY) {
@@ -63,6 +64,8 @@ function parseMove(from, to) {
 			}
 			found = BOOL.TRUE;
 			break;
+		} else {
+			console.log("something went wrong");
 		}
 	}
 
