@@ -23,13 +23,11 @@ $("#flipBoardButton").click(function () {
 		gameBoard.flipped = BOOL.FALSE;
 	}
 	if (START_FEN == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr w KQkq - 0 1") {
-		START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		switchSide("black");
 		newGame(START_FEN);
-		gameBoard.side = COLOURS.BLACK;
 	} else if (START_FEN == "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
-		START_FEN = "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr w KQkq - 0 1";
+		switchSide("white");
 		newGame(START_FEN);
-		gameBoard.side = COLOURS.WHITE;
 	}
 });
 
@@ -365,4 +363,27 @@ function startSearch() {
 	movePieceInGUI(searchController.best);
 	checkAndSet();
 
+}
+
+function reverseString(fenString) {
+	var newFenString = "";
+
+	for (var i = fenString.length - 1; i >= 0; i--) {
+		newFenString += fenString[i];
+	}
+	
+	return newFenString;
+
+}
+
+function switchSide(sideString) {
+	if (sideString = "white") {
+		side = "w";
+		console.log("new Start Fen: " + START_FEN);
+		gameBoard.side == COLOURS.WHITE;
+	} else if (sideString = "black") {
+		side = "b";
+		console.log(START_FEN);
+		gameBoard.side == COLOURS.BLACK;
+	}
 }

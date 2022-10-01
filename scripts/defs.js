@@ -31,7 +31,10 @@ var PVENTRIES = 10000;
 var filesBoard = new Array(boardSquareNumber);
 var ranksBoard = new Array(boardSquareNumber);
 
-var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+var side = "w";
+var piecePositionInFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR ";
+var fenEnding = " KQkq - 0 1";
+var START_FEN = piecePositionInFen + side + fenEnding;
 
 var pieceChar = ".PNBRQKpnbrqk";
 var sideChar = "wb-";
