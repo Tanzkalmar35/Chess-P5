@@ -1,14 +1,6 @@
-#FenInDiv {
-    position: relative;
-    left: 10vw;
-}
-#fenIn {
-    width: 50vw;
-    left: 10vw;
-}
 #board {
     position: relative;
-    top: 60px;
+    top: 100px;
     left: 600px;
     width: 640px;
     height: 640px;
@@ -57,4 +49,26 @@
     position: absolute;
     width: 80px;
     height: 80px;
+}
+
+#blackTimeBox {
+    width: 200px;
+    height: 50px;
+    margin-left: 1042px;
+    margin-top: 50px;
+    margin-bottom: -70px;
+    outline: 2px solid black;
+    text-align: center;
+    font-size: 40px;
+}
+
+#whiteTimeBox {
+    width: 200px;
+    height: 50px;
+    margin-left: 1042px;
+    margin-top: 130px;
+    margin-bottom: -70px;
+    outline: 2px solid black;
+    text-align: center;
+    font-size: 40px;
 }

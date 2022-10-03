@@ -39,6 +39,7 @@ function newGame(fenString) {
 	if (gameBoard.flipped == BOOL.TRUE) {
 		preSearch();
 	}
+	resetTimer();
 }
 
 function clearAllPieces() {
@@ -379,11 +380,9 @@ function reverseString(fenString) {
 function switchSide(sideString) {
 	if (sideString = "white") {
 		side = "w";
-		console.log("new Start Fen: " + START_FEN);
 		gameBoard.side == COLOURS.WHITE;
 	} else if (sideString = "black") {
 		side = "b";
-		console.log(START_FEN);
 		gameBoard.side == COLOURS.BLACK;
 	}
 }

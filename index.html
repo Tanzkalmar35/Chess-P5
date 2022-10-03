@@ -12,16 +12,15 @@
 
 </head>
 <body>
-    <header>
-        <h3>JS Chess</h3>
-    </header>
-
-    <div id="FenInDiv">
-        Fen: <br/>
-        <input type="text" id="fenIn"/>
-        <button type="button" id="SetFen">Set Position</button>
+    <div id="blackTimeBox">
+        <span id="timerMinutesBlack"></span>
+        <span id="timerSecondsBlack"></span>
     </div>
     <div id="board"></div>
+    <div id="whiteTimeBox">
+        <span id="timerMinutesWhite"></span>
+        <span id="timerSecondsWhite"></span>
+    </div>
     
     <div id="engineOutput"> Thinking time:
 
@@ -64,6 +63,7 @@
     <script src="scripts/pvTable.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/perft.js"></script>
+    <script src="scripts/timer.js"></script>
     <script src="scripts/gui.js"></script>
     <script src="scripts/game.js"></script>
 </body>
