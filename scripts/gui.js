@@ -31,6 +31,14 @@ $("#flipBoardButton").click(function () {
 	}
 });
 
+$("body").click(function () {
+	if (blackTimerPlaying) {
+		setupWhiteTimer(600);
+	} else if (whiteTimerPlaying) {
+		setupBlackTimer(600);
+	}
+});
+
 function newGame(fenString) {
 	ParseFen(fenString);
 	printBoard();
@@ -192,6 +200,8 @@ function addPieceToGUI(square, piece) {
 	var imageString = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
 	$("#board").append(imageString);
 
+	
+
 }
 
 function movePieceInGUI(move) {
@@ -235,6 +245,13 @@ function movePieceInGUI(move) {
 		removePieceFromGUI(to);
 		addPieceToGUI(to, PROMOTED(move));
 	}
+
+	if (gameBoard.side == COLOURS.WHITE) {
+
+	} else if (gameBoard.side == COLOURS.BLACK) {
+
+	}
+
 }
 
 // checks if it makes sense to continue to play

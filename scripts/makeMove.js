@@ -57,7 +57,7 @@ function makeMove(move) {
 	
 	var fromSquare = FROMSQ(move);
     var toSquare = TOSQ(move);
-    var side = gameBoard.side;	
+    var side = gameBoard.side;
 
 	gameBoard.history[gameBoard.hisPly].posKey = gameBoard.positionKey;
 

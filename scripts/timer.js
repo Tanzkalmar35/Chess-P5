@@ -16,6 +16,7 @@ var whiteTimerPlaying = false;
 
 function startBlackTimer(duration, whiteDisplay, blackDisplay) {
 
+    whiteTimerPlaying = false;
     blackTimerPlaying = true;
     timer = duration, minutes, seconds;
     
@@ -44,6 +45,7 @@ function startBlackTimer(duration, whiteDisplay, blackDisplay) {
 
 function startWhiteTimer(duration, whiteDisplay, blackDisplay) {
 
+    blackTimerPlaying = false;
     whiteTimerPlaying = true;
     timer2 = duration, minutes2, seconds2;
 
@@ -70,14 +72,28 @@ function startWhiteTimer(duration, whiteDisplay, blackDisplay) {
     }, 1000);
 }
 
-function setupTimer(time) {
+function setupWhiteTimer(time) {
     stopTimer();
-    minutes2 = parseInt(timer2 / 60, 10)
+    minutes2 = parseInt(timer2 / 60, 10);
     seconds2 = parseInt(timer2 % 60, 10);
     minutes2 = minutes2 < 10 ? "0" + minutes2 : minutes2;
     seconds2 = seconds2 < 10 ? "0" + seconds2 : seconds2;
     blackDisplay.textContent = minutes2 + ":" + seconds2;
     startWhiteTimer(time, whiteDisplay, blackDisplay);
+}
+
+function setupBlackTimer(time) {
+    stopTimer();
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10? "0" + seconds : seconds;
+    whiteDisplay.textContent = minutes + ":" + seconds;
+    startBlackTimer(time, whiteDisplay, blackDisplay);
+}
+
+function continueBLackTimer() {
+    //TODO: remember the time when stopping the timer and starting the timer with the stored time
 }
 
 function stopTimer() {
@@ -86,6 +102,5 @@ function stopTimer() {
 }
 
 function resetTimer() {
-    setupTimer(600);
+    setupWhiteTimer(600);
 }
-
