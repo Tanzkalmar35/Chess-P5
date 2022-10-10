@@ -33,9 +33,9 @@ $("#flipBoardButton").click(function () {
 
 $("body").click(function () {
 	if (blackTimerPlaying) {
-		setupWhiteTimer(600);
+		if (whiteTimerSetup) {continueWhiteTimer();} else {setupWhiteTimer(600);}
 	} else if (whiteTimerPlaying) {
-		setupBlackTimer(600);
+		if (blackTimerSetup) {continueBlackTimer();} else {setupBlackTimer(600);}
 	}
 });
 
