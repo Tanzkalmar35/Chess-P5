@@ -16,6 +16,8 @@ var whiteTimerPlaying = false;
 var blackTimerSetup = false;
 var whiteTimerSetup = false;
 
+var firstTimeWhite = true;
+
 function startBlackTimer(duration) {
 
     whiteTimerPlaying = false;
@@ -31,8 +33,8 @@ function startBlackTimer(duration) {
 
     blackDisplay.textContent = minutes + ":" + seconds;
 
-    clearInterval(interval2);
     clearInterval(interval);
+    clearInterval(interval2);
 
     interval = setInterval(function () {
         minutes = parseInt(timer / 60, 10)
@@ -46,6 +48,7 @@ function startBlackTimer(duration) {
         if (--timer < 0) {
             timer = 0;
         }
+        console.log("Black timer running");
     }, 1000);
 }
 
@@ -64,6 +67,10 @@ function startWhiteTimer(duration) {
 
     whiteDisplay.textContent = minutes2 + ":" + seconds2;
 
+    if (firstTimeWhite) {
+        blackDisplay.textContent = minutes2 + ":" + seconds2;
+    }
+
     clearInterval(interval);
     clearInterval(interval2);
 
@@ -80,6 +87,9 @@ function startWhiteTimer(duration) {
             timer2 = 0;
         }
     }, 1000);
+
+    firstTimeWhite = false;
+
 }
 
 function setupWhiteTimer(time) {
@@ -108,6 +118,8 @@ function setupBlackTimer(time) {
 
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10? "0" + seconds : seconds;
+
+    console.log("Black  timer set up!");
     
     startBlackTimer(time);
 }
@@ -158,6 +170,21 @@ function continueWhiteTimer() {
     console.log("Minutes remaining: " + remainingTimeWhite);
 }
 
+function switchTimers() {
+    var startingTime = document.getElementById("gameTimeSelect").value;
+    startingTime = startingTime * 60;
+
+	if (blackTimerPlaying) {
+		if (whiteTimerSetup) {continueWhiteTimer();} else {setupWhiteTimer(startingTime);}
+	} else if (whiteTimerPlaying) {
+		if (blackTimerSetup) {continueBlackTimer();} else {setupBlackTimer(startingTime);} // Black timer should be starting but isn't
+	}
+}
+
 function resetTimer() {
-    setupWhiteTimer(600);
+
+    var startingTime = document.getElementById("gameTimeSelect").value;
+    startingTime = startingTime * 60;
+
+    setupWhiteTimer(startingTime);
 }

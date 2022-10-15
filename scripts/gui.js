@@ -1,8 +1,3 @@
-$("#SetFen").click(function () {
-	var fenStr = $("#fenIn").val();	
-	newGame(fenStr);
-});
-
 $("#takeBackButton").click(function () {
 	if (gameBoard.hisPly > 0) {
 		takeMove();
@@ -31,23 +26,13 @@ $("#flipBoardButton").click(function () {
 	}
 });
 
-$("body").click(function () {
-	if (blackTimerPlaying) {
-		if (whiteTimerSetup) {continueWhiteTimer();} else {setupWhiteTimer(600);}
-	} else if (whiteTimerPlaying) {
-		if (blackTimerSetup) {continueBlackTimer();} else {setupBlackTimer(600);}
-	}
-});
-
 function newGame(fenString) {
-	ParseFen(fenString);
-	printBoard();
-	setInitialBoardPieces();
+	resetTimer();
+	initStarterBoard(fenString);
 	checkAndSet();
 	if (gameBoard.flipped == BOOL.TRUE) {
 		preSearch();
 	}
-	resetTimer();
 }
 
 function clearAllPieces() {
@@ -200,8 +185,6 @@ function addPieceToGUI(square, piece) {
 	var imageString = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
 	$("#board").append(imageString);
 
-	
-
 }
 
 function movePieceInGUI(move) {
@@ -246,11 +229,7 @@ function movePieceInGUI(move) {
 		addPieceToGUI(to, PROMOTED(move));
 	}
 
-	if (gameBoard.side == COLOURS.WHITE) {
-
-	} else if (gameBoard.side == COLOURS.BLACK) {
-
-	}
+	//switchTimers();
 
 }
 

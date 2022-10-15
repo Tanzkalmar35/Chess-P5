@@ -22,7 +22,24 @@
         <span id="timerSecondsWhite"></span>
     </div>
     
-    <div id="engineOutput"> Thinking time:
+    <div id="engineOutput"> 
+
+        <div id="gameTimeInput"> Game Time: 
+            <select id="gameTimeSelect">
+                <option value="1">1 Minute</option>
+                <option value="2">2 Minutes</option>
+                <option value="3">3 Minutes</option>
+                <option value="5">5 Minutes</option>
+                <option value="10">10 Minutes</option>
+                <option value="15">15 Minutes</option>
+                <option value="20">20 Minutes</option>
+                <option value="30">30 Minutes</option>
+            </select>
+        </div>
+
+        <br>
+        
+        Thinking time:
 
         <select id="thinkingTimeChoice">
             <option value="1">1s</option>
@@ -31,6 +48,7 @@
             <option value="6">6s</option>
             <option value="8">8s</option>
             <option value="10">10s</option>
+            <option value="100">100s</option>
         </select>
 
         <br/><br/>
@@ -43,7 +61,7 @@
         <span id="timeOut">Time: </span><br/><br/><br/>
 
         <button type="button" id="searchButton">Move now</button><br/><br/>
-        <button type="button" id="newGameButton">New game</button><br/><br/>
+        <button type="button" id="newGameButton">Start New game</button><br/><br/>
         <button type="button" id="flipBoardButton">Flip board</button><br/><br/>
         <button type="button" id="takeBackButton">Take Back</button><br/>
 
