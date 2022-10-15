@@ -1,6 +1,6 @@
 # A chess game, made for a school project.
 
-# Creators: Fabian Holler, Jarno Callies, Marc Müller
+# Creators: Fabian Holler, Jarno Callies, Marc Müller, Nick Hillmann
  
 # To clone the project:
 
