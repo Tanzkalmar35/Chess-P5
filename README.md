@@ -36,5 +36,5 @@
 
     3: Click on the "Go Live button in the bottom left corner of the screen
 
-    4: A new Browser tab with a preview of the project opens
+    4: A new Browser tab with a preview of the project opens or it shows all the files and you have to select the index.html.
 
