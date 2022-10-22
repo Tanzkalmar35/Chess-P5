@@ -13,13 +13,11 @@
 </head>
 <body>
     <div id="blackTimeBox">
-        <span id="timerMinutesBlack"></span>
-        <span id="timerSecondsBlack"></span>
+        <span id="timerMinutesBlack"></span>:<span id="timerSecondsBlack"></span>
     </div>
     <div id="board"></div>
     <div id="whiteTimeBox">
-        <span id="timerMinutesWhite"></span>
-        <span id="timerSecondsWhite"></span>
+        <span id="timerMinutesWhite"></span>:<span id="timerSecondsWhite"></span>
     </div>
     
     <div id="engineOutput"> 
@@ -36,6 +34,10 @@
                 <option value="30">30 Minutes</option>
             </select>
         </div>
+        <button type="button" id="btnWhitePlayer">white</button>
+        <button type="button" id="btnBlackPlayer">black</button>
+        <button type="button" id="btnStop">stop</button>
+        <button type="button" id="btnReset">reset</button>
 
         <br>
         
@@ -81,7 +83,7 @@
     <script src="scripts/pvTable.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/perft.js"></script>
-    <script src="scripts/timer.js"></script>
+    <!-- <script src="scripts/timer.js"></script> -->
     <script src="scripts/gui.js"></script>
     <script src="scripts/game.js"></script>
 </body>

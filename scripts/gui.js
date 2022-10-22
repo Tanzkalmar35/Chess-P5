@@ -27,7 +27,7 @@ $("#flipBoardButton").click(function () {
 });
 
 function newGame(fenString) {
-	resetTimer();
+	//startWhite();
 	initStarterBoard(fenString);
 	checkAndSet();
 	if (gameBoard.flipped == BOOL.TRUE) {
@@ -228,9 +228,6 @@ function movePieceInGUI(move) {
 		removePieceFromGUI(to);
 		addPieceToGUI(to, PROMOTED(move));
 	}
-
-	//switchTimers();
-
 }
 
 // checks if it makes sense to continue to play
