@@ -161,3 +161,5 @@ function continueWhiteTimer() {
 function resetTimer() {
     setupWhiteTimer(600);
 }
+
+//WHy no way to start black timer your racist?
