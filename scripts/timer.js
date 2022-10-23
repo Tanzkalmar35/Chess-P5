@@ -113,6 +113,9 @@ function setupBlackTimer(time) {
 }
 
 function continueBlackTimer() {
+
+    //STart when white timer isnt ticking ?
+    
     var remainingTimeBlack = blackDisplay.textContent;
     
     console.log("Minutes remaining: " + remainingTimeBlack);
