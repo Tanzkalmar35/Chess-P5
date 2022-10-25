@@ -111,6 +111,11 @@ function MIRROR64(sq) {
 }
 
 var Kings = [PIECES.wK, PIECES.bK];
+var Queens = [PIECES.wQ, PIECES.bQ];
+var Rooks = [PIECES.wR, PIECES.bR];
+var Bishops = [PIECES.wB, PIECES.bB];
+var Knights = [PIECES.wN, PIECES.bN];
+var Pawns = [PIECES.wP, PIECES.bP];
 
 var castlePerm = [
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,

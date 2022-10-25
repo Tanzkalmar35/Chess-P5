@@ -121,7 +121,39 @@ function evalPosition() {
 	if(gameBoard.pieceNumber[PIECES.bB] >= 2) {
 		score -= bishopPair;
 	}
+
+	//checking for hanging pieces
+
+	var queenNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Queens[gameBoard.side],0)], gameBoard.side);
 	
+	if (!queenNotHanging) {
+		score -= 10; 
+	}
+
+	var rookNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Rooks[gameBoard.side],0)], gameBoard.side);
+	
+	if (!rookNotHanging) {
+		score -= 5;
+	}
+
+	var BishopNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Bishops[gameBoard.side],0)], gameBoard.side);
+	
+	if (!BishopNotHanging) {
+		score -= 3.3;
+	}
+
+	var knightNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Knights[gameBoard.side],0)], gameBoard.side);
+	
+	if (!knightNotHanging) {
+		score -= 3;
+	}
+
+	var pawnNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Pawns[gameBoard.side],0)], gameBoard.side);
+	
+	if (!pawnNotHanging) {
+		score -= 1;
+	}
+
 	if(gameBoard.side == COLOURS.WHITE) {
 		return score;
 	} else {
