@@ -122,7 +122,7 @@ function evalPosition() {
 		score -= bishopPair;
 	}
 
-	//checking for hanging pieces
+	//checking for hanging pieces and adapting the score
 
 	var queenNotHanging = SquareAttacked(gameBoard.pieceList[PIECEINDEX(Queens[gameBoard.side],0)], gameBoard.side);
 	

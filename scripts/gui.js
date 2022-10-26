@@ -31,7 +31,7 @@ function newGame(fenString) {
 	initStarterBoard(fenString);
 	checkAndSet();
 	if (gameBoard.flipped == BOOL.TRUE) {
-		preSearch();
+		preSearch();	
 	}
 }
 
@@ -356,6 +356,8 @@ function startSearch() {
 	makeMove(searchController.best);
 	movePieceInGUI(searchController.best);
 	checkAndSet();
+
+	console.log("GameBoard.moveList: " + gameBoard.moveList);
 
 }
 
