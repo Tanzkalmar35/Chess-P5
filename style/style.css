@@ -51,27 +51,16 @@
     height: 80px;
 }
 
-#blackTimeBox {
-    width: 200px;
-    height: 50px;
-    margin-left: 1042px;
-    margin-top: 50px;
-    margin-bottom: -70px;
+#whiteTimeBox {
     outline: 2px solid black;
     text-align: center;
     font-size: 40px;
+    width: 200px;
+    height: 50px;
+    
 }
 
-#whiteTimeBox {
-    width: 200px;
-    height: 50px;
-    margin-left: 1042px;
-    margin-top: 130px;
-    margin-bottom: -70px;
-    outline: 2px solid black;
-    text-align: center;
-    font-size: 40px;
-}
+
 
 #feedback{
 
@@ -79,7 +68,6 @@
    border: none;
    color: white;
    padding: 15px 32px;
-   
    text-decoration: none;
    display: inline-block;
    font-size: 16px;
@@ -90,7 +78,7 @@
    border: 2px solid darkblue; /* Green */
    transition-duration: 0.4s;
     margin-top: 5%;
-     
+
 }
 
 #feedback:hover {

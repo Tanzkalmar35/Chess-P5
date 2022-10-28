@@ -1,92 +1,27 @@
 
-var whiteDisplay = document.querySelector('#whiteTimeBox');
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+setInterval(setTime, 1000);
 
-var minut = 0
-var sec = 0
-var mili = 0
-playing = false
-
-
-window.onload = function () { whiteDisplay.textContent = minut + ":" + sec + ":" + mili; playing = true;}
-
-function resetTimer (){
-
-    whiteDisplay.textContent = minut + ":" + sec + ":" + mili;
-
-
+function setTime()
+{
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds%60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
 }
 
-if (playing){
-
-    count()
-
-}
-
-function count() {
-
-    console.log("Game started")
-    while (true) {
-
-        mili += 1;
-        if(mili >= 100){
-
-            sec +=1;
-
-        }
-        if(sec >= 60){
-
-            minut += 1;
-
-        }
-
-
+function pad(val)
+{
+    var valString = val + "";
+    if(valString.length < 2)
+    {
+        return "0" + valString;
     }
-
-
+    else
+    {
+        return valString;
+    }
 }
 
-
-
-
-
-/*function startWhiteTimer(duration) {
-
-    blackTimerPlaying = false;
-    whiteTimerPlaying = true;
-
-    timer2 = duration, minutes2, seconds2;
-
-    minutes2 = parseInt(timer2 / 60, 10)
-    seconds2 = parseInt(timer2 % 60, 10);
-
-    minutes2 = minutes2 < 10 ? "0" + minutes2 : minutes2;
-    seconds2 = seconds2 < 10 ? "0" + seconds2 : seconds2;
-
-    whiteDisplay.textContent = minutes2 + ":" + seconds2;
-
-    clearInterval(interval);
-    clearInterval(interval2);
-
-    interval2 = setInterval(function () {
-        minutes2 = parseInt(timer2 / 60, 10)
-        seconds2 = parseInt(timer2 % 60, 10);
-
-        minutes2 = minutes2 < 10 ? "0" + minutes2 : minutes2;
-        seconds2 = seconds2 < 10 ? "0" + seconds2 : seconds2;
-
-        whiteDisplay.textContent = minutes2 + ":" + seconds2;
-
-        if (--timer2 < 0) {
-            timer2 = 0;
-        }
-    }, 1000);
-}
-
-function setupWhiteTimer(time) {
-
-    whiteDisplay.textContent = 
-
-
-}
-
-*/
+// Link: https://codepen.io/reynnor/pen/vmNaeM
