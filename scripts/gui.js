@@ -132,6 +132,12 @@ $(document).on("click", ".square", function (e) {
 	}
 });
 
+addEventListener("mousedown", e => {
+  // move the actions from the click on square and click on piece into functions, then use the functions in here as well
+  // https://codereview.stackexchange.com/questions/230826/chess-game-in-javascript - for drag and drop code
+  // maybe remove the piece from the square where the player clicked, append it to the cursor, then add it to the next clicked square (use fromSquare and toSquare)
+});
+
 function makeUserMove() {
 	if (userMove.from != SQUARES.NO_SQ && userMove.to != SQUARES.NO_SQ) {
 
