@@ -8,20 +8,20 @@
 
         - Go to https://github.com/Tanzkalmar35/Chess-P5 and click on code to copy the repository url
         - Open a new terminal and navigate to the place where you want the project to be saved
-        - type git clone + the repository url
+        - Type git clone + the repository url
 
     2. Download from github
 
         - Go to https://github.com/Tanzkalmar35/Chess-P5 and click on code, then download the zip file
-        - unzip the downloaded zip file to the location you want the project to be saved
+        - Unzip the downloaded zip file to the location you want the project to be saved
 
     3. Clone the repository from github desktop
 
         - Go to https://github.com/Tanzkalmar35/Chess-P5 and click on code to copy the repository url
         - Open Github desktop and click on the "current repository" button (at the left top)
         - Click on the "add" dropdown button
-        - click on "Clone Repository" 
-        - navigate to the "URL" section and enter the repository url you copied before
+        - Click on "Clone Repository" 
+        - Navigate to the "URL" section and enter the repository url you copied before
 
 # To preview the project
 
