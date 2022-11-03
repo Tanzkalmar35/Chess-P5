@@ -11,51 +11,51 @@
     <!-- chess.com account: email: AnziehendMystischerTiger@existiert.net, pass: Abcdefg123 -->
 
 </head>
-<body>
-    <div id="blackTimeBox">
-        <span id="timerMinutesBlack"></span>
-        <span id="timerSecondsBlack"></span>
-    </div>
-    <div id="board"></div>
-    <div id="whiteTimeBox">
-        <span id="timerMinutesWhite"></span>
-        <span id="timerSecondsWhite"></span>
-    </div>
-    
-    <div id="engineOutput"> Thinking time:
+<body > 
+    <div style="text-align: center;">
+        <div id="fuck yo">
+            <div id="whiteTimeBox">
+                <label id="minutes">00</label>
+                <label id="colon">:</label>
+                <label id="seconds">00</label>
+            </div>
+        </div>
+        <div id="board"></div>
 
-        <select id="thinkingTimeChoice">
-            <option value="1">1s</option>
-            <option value="2">2s</option>
-            <option value="4">4s</option>
-            <option value="6">6s</option>
-            <option value="8">8s</option>
-            <option value="10">10s</option>
-        </select>
+        <div id="engineOutput"> Thinking time:
 
-        <br/><br/>
+            <select id="thinkingTimeChoice">
+                <option value="1">1s</option>
+                <option value="2">2s</option>
+                <option value="4">4s</option>
+                <option value="6">6s</option>
+                <option value="8">8s</option>
+                <option value="10">10s</option>
+            </select>
 
-        <span id="bestOut">Best Move: </span><br/><br/>
-        <span id="depthOut">Depth: </span><br/><br/>
-        <span id="scoreOut">Score: </span><br/><br/>
-        <span id="nodesOut">Nodes: </span><br/><br/>
-        <span id="orderingOut">Ordering: </span><br/><br/>
-        <span id="timeOut">Time: </span><br/><br/><br/>
+            <br/><br/>
 
-        <button type="button" id="searchButton">Move now</button><br/><br/>
-        <button type="button" id="newGameButton">New game</button><br/><br/>
-        <button type="button" id="flipBoardButton">Flip board</button><br/><br/>
-        <button type="button" id="takeBackButton">Take Back</button><br/>
+            <span id="bestOut">Best Move: </span><br/><br/>
+            <span id="depthOut">Depth: </span><br/><br/>
+            <span id="scoreOut">Score: </span><br/><br/>
+            <span id="nodesOut">Nodes: </span><br/><br/>
+            <span id="orderingOut">Ordering: </span><br/><br/>
+            <span id="timeOut">Time: </span><br/><br/><br/>
 
-        <span id="gameStatus"></span>
+            <button type="button" id="searchButton">Move now</button><br/><br/>
+            <button type="button" id="newGameButton">New game</button><br/><br/>
+            <button type="button" id="flipBoardButton">Flip board</button><br/><br/>
+            <button type="button" id="takeBackButton">Take Back</button><br/>
+
+            <span id="gameStatus"></span>
 
     </div>
     <div>
         <!--Email wird noch geändert-->
-        <p id = "feedback_back" ><a href="mailto:?subject=Feedback&body=Message" id = "feedback" >Send Feedback</a></p>
+        <p id = "feedback_back" ><a href="mailto:nickhillmann@yahoo.com?subject=Feedback&body=Message" id = "feedback" >Send Feedback</a></p>
 
+        </div>
     </div>
-
     <!-- Tutorial video #54 -->
     
     <script src="scripts/jquery-3.6.1.min.js"></script>
@@ -72,8 +72,7 @@
     <script src="scripts/gui.js"></script>
     <script src="scripts/game.js"></script>
 
-    <!-- IGNOR -->
-    <script src="nicks_button_funcs.js"></script>
+    
 
 </body> 
 </html>

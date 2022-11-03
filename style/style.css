@@ -1,3 +1,11 @@
+body{
+
+    text-align: center;;
+    display: flexbox;
+    justify-content: center;;
+
+}
+
 #board {
     position: relative;
     top: 100px;
@@ -6,6 +14,7 @@
     height: 640px;
     border-style: solid;
     border-width: 2px;
+   
 }
 #engineOutput {
     position: absolute;
@@ -51,27 +60,16 @@
     height: 80px;
 }
 
-#blackTimeBox {
-    width: 200px;
-    height: 50px;
-    margin-left: 1042px;
-    margin-top: 50px;
-    margin-bottom: -70px;
+#whiteTimeBox {
     outline: 2px solid black;
     text-align: center;
     font-size: 40px;
+    width: 200px;
+    height: 50px;
+    
 }
 
-#whiteTimeBox {
-    width: 200px;
-    height: 50px;
-    margin-left: 1042px;
-    margin-top: 130px;
-    margin-bottom: -70px;
-    outline: 2px solid black;
-    text-align: center;
-    font-size: 40px;
-}
+
 
 #feedback{
 
@@ -79,7 +77,6 @@
    border: none;
    color: white;
    padding: 15px 32px;
-   text-align: center;
    text-decoration: none;
    display: inline-block;
    font-size: 16px;
@@ -89,7 +86,8 @@
    color: black;
    border: 2px solid darkblue; /* Green */
    transition-duration: 0.4s;
-   /*PLS CENTER and margin or padding top 5% thx */
+    margin-top: 5%;
+
 }
 
 #feedback:hover {
@@ -102,4 +100,10 @@
 	background-color: rgb(38, 0, 143); /* Green */
 	box-shadow: 0 5px #666;
 	transform: translateY(4px);
+}
+
+#feedback_div{
+
+    text-align: center;
+   
 }

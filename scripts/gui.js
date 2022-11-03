@@ -30,7 +30,7 @@ $("#flipBoardButton").click(function () {
 		newGame(START_FEN);
 	}
 });
-
+/*
 $("body").click(function () {
 	if (blackTimerPlaying) {
 		if (whiteTimerSetup) {continueWhiteTimer();} else {setupWhiteTimer(600);}
@@ -38,7 +38,7 @@ $("body").click(function () {
 		if (blackTimerSetup) {continueBlackTimer();} else {setupBlackTimer(600);}
 	}
 });
-
+*/
 function newGame(fenString) {
 	ParseFen(fenString);
 	printBoard();
