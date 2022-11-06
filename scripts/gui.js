@@ -100,41 +100,89 @@ function clickedSquare(pageX, pageY) {
 
 }
 
-$(document).on("click", ".piece", function (e) {
-	console.log("piece click");
-	if (gameBoard.flipped == BOOL.FALSE) {
-		if (gameBoard.side == COLOURS.WHITE) {
-			if (userMove.from == SQUARES.NO_SQ) {
-				userMove.from = clickedSquare(e.pageX, e.pageY);			
-			} else {
-				userMove.to = clickedSquare(e.pageX, e.pageY);
-			}
-		
-			makeUserMove();
-		}
-	} else if (gameBoard.flipped == BOOL.TRUE) {
-		if (gameBoard.side == COLOURS.BLACK) {
-			if (userMove.from == SQUARES.NO_SQ) {
-				userMove.from = clickedSquare(e.pageX, e.pageY);			
-			} else {
-				userMove.to = clickedSquare(e.pageX, e.pageY);
-			}
-			makeUserMove();
-		}
+function clickPiece(e) {
+
+  console.log("piece click");
+  if (gameBoard.flipped == BOOL.FALSE) {
+	  if (gameBoard.side == COLOURS.WHITE) {
+		  if (userMove.from == SQUARES.NO_SQ) {
+			  userMove.from = clickedSquare(e.pageX, e.pageY);			
+		  } else {
+			  userMove.to = clickedSquare(e.pageX, e.pageY);
+		  }
+	
+		  makeUserMove();
+	  }
+  } else if (gameBoard.flipped == BOOL.TRUE) {
+	  if (gameBoard.side == COLOURS.BLACK) {
+		  if (userMove.from == SQUARES.NO_SQ) {
+			  userMove.from = clickedSquare(e.pageX, e.pageY);			
+		  } else {
+			  userMove.to = clickedSquare(e.pageX, e.pageY);
+		  }
+		  makeUserMove();
+	  }
 	}
+}
 
-});
+function clickSquare(e) {
 
-$(document).on("click", ".square", function (e) {
-	if (userMove.from != SQUARES.NO_SQ) {
+  if (userMove.from != SQUARES.NO_SQ) {
 		userMove.to = clickedSquare(e.pageX, e.pageY);
 		makeUserMove();
 	}
+
+}
+
+// $(document).on("click", ".piece", function (e) {
+  // clickPiece(e);
+
+// });
+
+$(document).on("click", ".square", function (e) {
+	clickSquare(e);
 });
 
-addEventListener("mousedown", e => {
-  // move the actions from the click on square and click on piece into functions, then use the functions in here as well
-  // https://codereview.stackexchange.com/questions/230826/chess-game-in-javascript - for drag and drop code
+$(document).on("mousedown", ".piece", function(e) {
+
+  clickPiece(e);
+  
+  var fromSquare = userMove.from;
+  
+  var piece;
+
+  $(".piece").each(function(index) {
+		if (pieceIsOnSquare(fromSquare, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
+			piece = $(this);
+		}
+	});
+
+ 	var file = filesBoard[fromSquare];
+	var rank = ranksBoard[fromSquare];
+
+	rankName = "rank" + (rank + 1);
+	fileName = "file" + (file + 1);
+
+  console.log("PIECE: "+ piece)
+
+	var pieceFileName = "images/pieces/" + sideChar[pieceCol[piece]] + pieceChar[piece].toUpperCase() + ".png";
+	var pieceImage = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
+	
+  document.body.append(pieceImage);
+
+  console.log("PIECE IMAGE = " + pieceImage);
+	
+  // 1. Remove the image of the clicked piece from the square
+ 
+  removePieceFromGUI(fromSquare);
+  // 2. Attach the image of the clicked piece to the mouse cursor
+  function moveAt(pageX, pageY) {
+    pieceImage.style.left = pageX - pieceImage.offsetWidth / 2 + "px";
+    pieceImage.style.top = pageY - pieceImage.offsetHeight / 2 + "px";
+  }
+  moveAt(e.pageX, e.pageY);
+  // https://javascript.info/mouse-drag-and-drop intructions to make a decent drag and drop action 
+  // action from removePieceFromGUI function to get the image as a element (easy to append)
   // maybe remove the piece from the square where the player clicked, append it to the cursor, then add it to the next clicked square (use fromSquare and toSquare)
 });
 
@@ -173,7 +221,7 @@ function pieceIsOnSquare(square, top, left) {
 }
 
 function removePieceFromGUI(square) {
-	$(".piece").each(function(index) {
+  $(".piece").each(function(index) {
 		if (pieceIsOnSquare(square, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
 			$(this).remove();
 		}
