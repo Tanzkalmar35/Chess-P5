@@ -126,7 +126,6 @@ function clickPiece(e) {
 }
 
 function clickSquare(e) {
-
   if (userMove.from != SQUARES.NO_SQ) {
 		userMove.to = clickedSquare(e.pageX, e.pageY);
 		makeUserMove();
@@ -134,56 +133,78 @@ function clickSquare(e) {
 
 }
 
-// $(document).on("click", ".piece", function (e) {
-  // clickPiece(e);
+$(document).on("click", ".piece", function (e) {
+  clickPiece(e);
 
-// });
+});
 
 $(document).on("click", ".square", function (e) {
 	clickSquare(e);
 });
 
+var className = "";
+
+document.addEventListener("click", (e) => {
+	var classOfClickedElement = e.target.className;
+
+	className = classOfClickedElement;
+});
+
 $(document).on("mousedown", ".piece", function(e) {
 
-  clickPiece(e);
-  
-  var fromSquare = userMove.from;
-  
-  var piece;
+	//IDEA: ON MOUSE DOWN CREATE NEW IMAGE, MOVE THIS IMAGE, DELETE IT ON MOUSE UP AND MOVE THE OLD ONE
 
-  $(".piece").each(function(index) {
-		if (pieceIsOnSquare(fromSquare, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
-			piece = $(this);
-		}
-	});
+	console.log("THIS = " + e.target.getAttribute("src"));
 
- 	var file = filesBoard[fromSquare];
-	var rank = ranksBoard[fromSquare];
+	var oldPieceImageClass = e.target.getAttribute("class");	
+	var oldPieceImageUrl = e.target.getAttribute("src");
 
-	rankName = "rank" + (rank + 1);
-	fileName = "file" + (file + 1);
+	clickPiece(e);
 
-  console.log("PIECE: "+ piece)
+	//remove the image from screen
+	//removePieceFromGUI(userMove.from);
 
-	var pieceFileName = "images/pieces/" + sideChar[pieceCol[piece]] + pieceChar[piece].toUpperCase() + ".png";
-	var pieceImage = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
-	
-  document.body.append(pieceImage);
+	var imageString = "<image src=\"" + oldPieceImageUrl + "\" class=\"" + oldPieceImageClass + "\"/>";
 
-  console.log("PIECE IMAGE = " + pieceImage);
-	
-  // 1. Remove the image of the clicked piece from the square
- 
-  removePieceFromGUI(fromSquare);
-  // 2. Attach the image of the clicked piece to the mouse cursor
-  function moveAt(pageX, pageY) {
-    pieceImage.style.left = pageX - pieceImage.offsetWidth / 2 + "px";
-    pieceImage.style.top = pageY - pieceImage.offsetHeight / 2 + "px";
-  }
-  moveAt(e.pageX, e.pageY);
-  // https://javascript.info/mouse-drag-and-drop intructions to make a decent drag and drop action 
-  // action from removePieceFromGUI function to get the image as a element (easy to append)
-  // maybe remove the piece from the square where the player clicked, append it to the cursor, then add it to the next clicked square (use fromSquare and toSquare)
+	console.log("IMAGESTRING = " + imageString);
+
+	//create new image
+	var newPieceImage = document.createElement("img");
+
+	newPieceImage.src = oldPieceImageUrl;
+	newPieceImage.className = oldPieceImageClass;
+
+	console.log("MOUSE IS DOWN ON A PIECE");
+
+	newPieceImage.style.position = "absolute";
+	newPieceImage.style.zIndex = 1000;
+
+	document.body.append(newPieceImage);
+
+	moveAt(e.pageX, e.pageY);
+
+	function moveAt(x, y) {
+		newPieceImage.style.left = x - newPieceImage.offsetWidth / 2 + "px";
+		newPieceImage.style.top = y - newPieceImage.offsetHeight / 2 + "px";
+	}
+
+	function onMouseMove(e) {
+		moveAt(e.pageX, e.pageY);
+	}
+
+	document.addEventListener('mousemove', onMouseMove);
+
+	newPieceImage.onmouseup = function(event) {
+		clickSquare(event);
+		console.log("MOUSE IS UP");
+		document.removeEventListener('mousemove', onMouseMove);
+		this.onmouseup = null;
+	}
+
+	newPieceImage.ondragstart = function() {
+		return false;
+	};
+
 });
 
 function makeUserMove() {
@@ -236,7 +257,7 @@ function addPieceToGUI(square, piece) {
 	fileName = "file" + (file + 1);
 
 	var pieceFileName = "images/pieces/" + sideChar[pieceCol[piece]] + pieceChar[piece].toUpperCase() + ".png";
-	var imageString = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
+	var imageString = "<image draggable = true src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
 	$("#board").append(imageString);
 
 }
