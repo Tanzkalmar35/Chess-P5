@@ -154,8 +154,6 @@ $(document).on("mousedown", ".piece", function(e) {
 
 	//IDEA: ON MOUSE DOWN CREATE NEW IMAGE, MOVE THIS IMAGE, DELETE IT ON MOUSE UP AND MOVE THE OLD ONE
 
-	console.log("THIS = " + e.target.getAttribute("src"));
-
 	var oldPieceImageClass = e.target.getAttribute("class");	
 	var oldPieceImageUrl = e.target.getAttribute("src");
 
@@ -173,15 +171,11 @@ $(document).on("mousedown", ".piece", function(e) {
 
 	newPieceImage.src = oldPieceImageUrl;
 	newPieceImage.className = oldPieceImageClass;
-
-	console.log("MOUSE IS DOWN ON A PIECE");
-
+	newPieceImage.id = "placeholderImage";
 	newPieceImage.style.position = "absolute";
 	newPieceImage.style.zIndex = 1000;
 
 	document.body.append(newPieceImage);
-
-	moveAt(e.pageX, e.pageY);
 
 	function moveAt(x, y) {
 		newPieceImage.style.left = x - newPieceImage.offsetWidth / 2 + "px";
@@ -194,16 +188,15 @@ $(document).on("mousedown", ".piece", function(e) {
 
 	document.addEventListener('mousemove', onMouseMove);
 
-	newPieceImage.onmouseup = function(event) {
-		clickSquare(event);
-		console.log("MOUSE IS UP");
+	document.addEventListener("mouseup", function(event) {
+		console.log("MOUSE IS UP!!!");
+		clickSquare(event); // ADD THE MOUSE DOWN FOR .PIECE AND .SQUARE	
 		document.removeEventListener('mousemove', onMouseMove);
-		this.onmouseup = null;
-	}
+		document.getElementById("placeholderImage").remove();
+		document.onmouseup = null;
+	
+	});
 
-	newPieceImage.ondragstart = function() {
-		return false;
-	};
 
 });
 
