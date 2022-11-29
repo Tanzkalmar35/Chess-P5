@@ -162,10 +162,6 @@ $(document).on("mousedown", ".piece", function(e) {
 	//remove the image from screen
 	//removePieceFromGUI(userMove.from);
 
-	var imageString = "<image src=\"" + oldPieceImageUrl + "\" class=\"" + oldPieceImageClass + "\"/>";
-
-	console.log("IMAGESTRING = " + imageString);
-
 	//create new image
 	var newPieceImage = document.createElement("img");
 
@@ -181,6 +177,8 @@ $(document).on("mousedown", ".piece", function(e) {
 		newPieceImage.style.left = x - newPieceImage.offsetWidth / 2 + "px";
 		newPieceImage.style.top = y - newPieceImage.offsetHeight / 2 + "px";
 	}
+
+	moveAt(e.pageX, e.pageY)
 
 	function onMouseMove(e) {
 		moveAt(e.pageX, e.pageY);
@@ -250,7 +248,7 @@ function addPieceToGUI(square, piece) {
 	fileName = "file" + (file + 1);
 
 	var pieceFileName = "images/pieces/" + sideChar[pieceCol[piece]] + pieceChar[piece].toUpperCase() + ".png";
-	var imageString = "<image draggable = true src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
+	var imageString = "<image draggable=\"true\" src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
 	$("#board").append(imageString);
 
 }
