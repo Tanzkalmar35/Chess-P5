@@ -30,6 +30,8 @@ function newGame(fenString) {
 	//startWhite();
 	initStarterBoard(fenString);
 	checkAndSet();
+	var audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/notify.mp3");
+	audio.play();
 	if (gameBoard.flipped == BOOL.TRUE) {
 		preSearch();	
 	}
@@ -255,9 +257,12 @@ function addPieceToGUI(square, piece) {
 
 function movePieceInGUI(move) {
 
+	var audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3");
+	var audioPlayed = false;
 	var from = FROMSQ(move);
 	var to = TOSQ(move);
 
+	// Deleting pieces that need to be deleted (capture, EP)
 	if (move & moveFlagEnPassant) {
 		var enPassantRemove;
 		if (gameBoard.side == COLOURS.BLACK) {
@@ -265,8 +270,12 @@ function movePieceInGUI(move) {
 		} else {
 			enPassantRemove = to + 10;
 		}
+		audio.play();
+		audioPlayed = true;
 		removePieceFromGUI(enPassantRemove);
 	} else if (CAPTURED(move)) {
+		audio.play();
+		audioPlayed = true;
 		removePieceFromGUI(to);
 	}
 
@@ -276,8 +285,13 @@ function movePieceInGUI(move) {
 	rankName = "rank" + (rank + 1);
 	fileName = "file" + (file + 1);
 
+	// Actually moving the piece
 	$(".piece").each(function(index) {
 		if (pieceIsOnSquare(from, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
+			if (!audioPlayed) {
+				audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3");
+				audio.play();
+			}
 			$(this).removeClass();
 			$(this).addClass("piece " + rankName + " " + fileName);
 		}
