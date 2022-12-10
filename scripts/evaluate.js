@@ -9,7 +9,6 @@ var pawnTable = [
 0	,	0	,	0	,	0	,	0	,	0	,	0	,	0	
 ];
 
-
 var knightTable = [
 0	,	-10	,	0	,	0	,	0	,	0	,	-10	,	0	,
 0	,	0	,	0	,	5	,	5	,	0	,	0	,	0	,
@@ -44,7 +43,6 @@ var rookTable = [
 ];
 
 var bishopPair = 40;
-
 
 function evalPosition() {
 	
