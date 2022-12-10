@@ -1,8 +1,3 @@
-$("#SetFen").click(function () {
-	var fenStr = $("#fenIn").val();	
-	newGame(fenStr);
-});
-
 $("#takeBackButton").click(function () {
 	if (gameBoard.hisPly > 0) {
 		takeMove();
@@ -30,24 +25,16 @@ $("#flipBoardButton").click(function () {
 		newGame(START_FEN);
 	}
 });
-/*
-$("body").click(function () {
-	if (blackTimerPlaying) {
-		if (whiteTimerSetup) {continueWhiteTimer();} else {setupWhiteTimer(600);}
-	} else if (whiteTimerPlaying) {
-		if (blackTimerSetup) {continueBlackTimer();} else {setupBlackTimer(600);}
-	}
-});
-*/
+
 function newGame(fenString) {
-	ParseFen(fenString);
-	printBoard();
-	setInitialBoardPieces();
+	//startWhite();
+	initStarterBoard(fenString);
 	checkAndSet();
+	var audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/notify.mp3");
+	audio.play();
 	if (gameBoard.flipped == BOOL.TRUE) {
-		preSearch();
+		preSearch();	
 	}
-	resetTimer();
 }
 
 function clearAllPieces() {
@@ -115,36 +102,102 @@ function clickedSquare(pageX, pageY) {
 
 }
 
-$(document).on("click", ".piece", function (e) {
-	console.log("piece click");
-	if (gameBoard.flipped == BOOL.FALSE) {
-		if (gameBoard.side == COLOURS.WHITE) {
-			if (userMove.from == SQUARES.NO_SQ) {
-				userMove.from = clickedSquare(e.pageX, e.pageY);			
-			} else {
-				userMove.to = clickedSquare(e.pageX, e.pageY);
-			}
-		
-			makeUserMove();
-		}
-	} else if (gameBoard.flipped == BOOL.TRUE) {
-		if (gameBoard.side == COLOURS.BLACK) {
-			if (userMove.from == SQUARES.NO_SQ) {
-				userMove.from = clickedSquare(e.pageX, e.pageY);			
-			} else {
-				userMove.to = clickedSquare(e.pageX, e.pageY);
-			}
-			makeUserMove();
-		}
+function clickPiece(e) {
+
+  console.log("piece click");
+  if (gameBoard.flipped == BOOL.FALSE) {
+	  if (gameBoard.side == COLOURS.WHITE) {
+		  if (userMove.from == SQUARES.NO_SQ) {
+			  userMove.from = clickedSquare(e.pageX, e.pageY);			
+		  } else {
+			  userMove.to = clickedSquare(e.pageX, e.pageY);
+		  }
+	
+		  makeUserMove();
+	  }
+  } else if (gameBoard.flipped == BOOL.TRUE) {
+	  if (gameBoard.side == COLOURS.BLACK) {
+		  if (userMove.from == SQUARES.NO_SQ) {
+			  userMove.from = clickedSquare(e.pageX, e.pageY);			
+		  } else {
+			  userMove.to = clickedSquare(e.pageX, e.pageY);
+		  }
+		  makeUserMove();
+	  }
 	}
+}
+
+function clickSquare(e) {
+  if (userMove.from != SQUARES.NO_SQ) {
+		userMove.to = clickedSquare(e.pageX, e.pageY);
+		makeUserMove();
+	}
+
+}
+
+$(document).on("click", ".piece", function (e) {
+  clickPiece(e);
 
 });
 
 $(document).on("click", ".square", function (e) {
-	if (userMove.from != SQUARES.NO_SQ) {
-		userMove.to = clickedSquare(e.pageX, e.pageY);
-		makeUserMove();
+	clickSquare(e);
+});
+
+var className = "";
+
+document.addEventListener("click", (e) => {
+	var classOfClickedElement = e.target.className;
+
+	className = classOfClickedElement;
+});
+
+$(document).on("mousedown", ".piece", function(e) {
+
+	//IDEA: ON MOUSE DOWN CREATE NEW IMAGE, MOVE THIS IMAGE, DELETE IT ON MOUSE UP AND MOVE THE OLD ONE
+
+	var oldPieceImageClass = e.target.getAttribute("class");	
+	var oldPieceImageUrl = e.target.getAttribute("src");
+
+	clickPiece(e);
+
+	//remove the image from screen
+	//removePieceFromGUI(userMove.from);
+
+	//create new image
+	var newPieceImage = document.createElement("img");
+
+	newPieceImage.src = oldPieceImageUrl;
+	newPieceImage.className = oldPieceImageClass;
+	newPieceImage.id = "placeholderImage";
+	newPieceImage.style.position = "absolute";
+	newPieceImage.style.zIndex = 1000;
+
+	document.body.append(newPieceImage);
+
+	function moveAt(x, y) {
+		newPieceImage.style.left = x - newPieceImage.offsetWidth / 2 + "px";
+		newPieceImage.style.top = y - newPieceImage.offsetHeight / 2 + "px";
 	}
+
+	moveAt(e.pageX, e.pageY)
+
+	function onMouseMove(e) {
+		moveAt(e.pageX, e.pageY);
+	}
+
+	document.addEventListener('mousemove', onMouseMove);
+
+	document.addEventListener("mouseup", function(event) {
+		console.log("MOUSE IS UP!!!");
+		clickSquare(event); // ADD THE MOUSE DOWN FOR .PIECE AND .SQUARE	
+		document.removeEventListener('mousemove', onMouseMove);
+		document.getElementById("placeholderImage").remove();
+		document.onmouseup = null;
+	
+	});
+
+
 });
 
 function makeUserMove() {
@@ -182,7 +235,7 @@ function pieceIsOnSquare(square, top, left) {
 }
 
 function removePieceFromGUI(square) {
-	$(".piece").each(function(index) {
+  $(".piece").each(function(index) {
 		if (pieceIsOnSquare(square, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
 			$(this).remove();
 		}
@@ -197,18 +250,19 @@ function addPieceToGUI(square, piece) {
 	fileName = "file" + (file + 1);
 
 	var pieceFileName = "images/pieces/" + sideChar[pieceCol[piece]] + pieceChar[piece].toUpperCase() + ".png";
-	var imageString = "<image src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
+	var imageString = "<image draggable=\"true\" src=\"" + pieceFileName + "\" class=\"piece " + rankName + " " + fileName + "\"/>";
 	$("#board").append(imageString);
-
-	
 
 }
 
 function movePieceInGUI(move) {
 
+	var audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3");
+	var audioPlayed = false;
 	var from = FROMSQ(move);
 	var to = TOSQ(move);
 
+	// Deleting pieces that need to be deleted (capture, EP)
 	if (move & moveFlagEnPassant) {
 		var enPassantRemove;
 		if (gameBoard.side == COLOURS.BLACK) {
@@ -216,8 +270,12 @@ function movePieceInGUI(move) {
 		} else {
 			enPassantRemove = to + 10;
 		}
+		audio.play();
+		audioPlayed = true;
 		removePieceFromGUI(enPassantRemove);
 	} else if (CAPTURED(move)) {
+		audio.play();
+		audioPlayed = true;
 		removePieceFromGUI(to);
 	}
 
@@ -227,8 +285,13 @@ function movePieceInGUI(move) {
 	rankName = "rank" + (rank + 1);
 	fileName = "file" + (file + 1);
 
+	// Actually moving the piece
 	$(".piece").each(function(index) {
 		if (pieceIsOnSquare(from, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
+			if (!audioPlayed) {
+				audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3");
+				audio.play();
+			}
 			$(this).removeClass();
 			$(this).addClass("piece " + rankName + " " + fileName);
 		}
@@ -245,13 +308,6 @@ function movePieceInGUI(move) {
 		removePieceFromGUI(to);
 		addPieceToGUI(to, PROMOTED(move));
 	}
-
-	if (gameBoard.side == COLOURS.WHITE) {
-
-	} else if (gameBoard.side == COLOURS.BLACK) {
-
-	}
-
 }
 
 // checks if it makes sense to continue to play
@@ -380,6 +436,8 @@ function startSearch() {
 	makeMove(searchController.best);
 	movePieceInGUI(searchController.best);
 	checkAndSet();
+
+	console.log("GameBoard.moveList: " + gameBoard.moveList);
 
 }
 
