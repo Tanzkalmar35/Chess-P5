@@ -1,6 +1,7 @@
 # A chess game, made for a school project.
 
 # Creators: Fabian Holler, Jarno Callies, Marc Müller, Nick Hillmann
+# OneNote: https://tbzmitte-my.sharepoint.com/:o:/g/personal/nick167_tbz-bremen_de/EmtPh9dzcx1MrPKjFadM2-4BwrkjFIsVE5cCrAZtQZyOtw?e=w2yJCm
  
 # To clone the project:
 
