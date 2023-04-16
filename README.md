@@ -1,7 +1,4 @@
-# A chess game, made for a school project.
-
-# Creators: Fabian Holler, Jarno Callies, Marc Müller, Nick Hillmann
-# OneNote: https://tbzmitte-my.sharepoint.com/:o:/g/personal/nick167_tbz-bremen_de/EmtPh9dzcx1MrPKjFadM2-4BwrkjFIsVE5cCrAZtQZyOtw?e=w2yJCm
+# A chess engine built in javascript
  
 # To clone the project:
 
@@ -35,7 +32,7 @@
         1 - Click on the Extension Icon on the left of the starting screen in vs code
         2 - Search for Live Server and download it
 
-    3: Click on the "Go Live button in the bottom left corner of the screen
+    3: Click on the "Go Live button in the bottom right corner of the screen
 
     4: A new Browser tab with a preview of the project opens or it shows all the files and you have to select the index.html.
 
