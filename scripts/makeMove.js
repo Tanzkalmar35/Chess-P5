@@ -134,9 +134,7 @@ function makeMove(move) {
     HASH_SIDE();
     
     if(SquareAttacked(gameBoard.pieceList[PIECEINDEX(Kings[side],0)], gameBoard.side))  {
-        var audio = new Audio("https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/notify.mp3");
-        audio.play();
-        takeMove();
+         takeMove();
     	return BOOL.FALSE;
     }
     
