@@ -2,7 +2,7 @@
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
 var totalSeconds = 0;
-setInterval(setTime, 1000);
+var interval = setInterval(setTime, 1000);
 
 function setTime()
 {

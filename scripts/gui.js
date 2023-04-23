@@ -47,7 +47,6 @@ function newGame(fenString) {
 	if (gameBoard.flipped == BOOL.TRUE) {
 		preSearch();
 	}
-	resetTimer();
 }
 
 function clearAllPieces() {
